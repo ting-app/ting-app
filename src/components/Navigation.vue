@@ -8,7 +8,7 @@
       <v-btn text>
         登陆
       </v-btn>
-      <v-btn text>
+      <v-btn text @click="register">
         注册
       </v-btn>
     </v-app-bar>
@@ -20,6 +20,11 @@ export default {
   name: 'Navigation',
   data () {
     return {}
+  },
+  methods: {
+    register () {
+      this.$router.push('/register')
+    }
   }
 }
 </script>

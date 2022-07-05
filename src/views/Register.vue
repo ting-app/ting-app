@@ -22,8 +22,8 @@
             required
           ></v-text-field>
           <v-text-field
-            v-model="confirmedPassword"
-            :rules="confirmedPasswordRules"
+            v-model="confirmPassword"
+            :rules="confirmPasswordRules"
             label="确认密码"
             type="password"
             required
@@ -32,7 +32,7 @@
             <v-btn
               :disabled="!valid"
               class="mr-4"
-              @click="validate"
+              @click="register"
             >
               注册
             </v-btn>
@@ -50,13 +50,15 @@
 </template>
 
 <script>
+import axios from '../axios'
+
 export default {
   name: 'Register',
   data () {
     return {
       name: '',
       password: '',
-      confirmedPassword: '',
+      confirmPassword: '',
       valid: false,
       nameRules: [
         v => !!v || '姓名不能为空',
@@ -67,15 +69,31 @@ export default {
         v => v.length >= 6 || '密码不能少于6个字符',
         v => v.length <= 20 || '密码不能超过20个字符'
       ],
-      confirmedPasswordRules: [
+      confirmPasswordRules: [
         v => !!v || '确认密码不能为空',
         v => v === this.password || '两次密码不一致'
       ]
     }
   },
   methods: {
-    validate () {
-      this.$refs.form.validate()
+    register () {
+      if (!this.$refs.form.validate()) {
+        return
+      }
+
+      const user = {
+        name: this.name,
+        password: this.password,
+        confirmPassword: this.confirmPassword
+      }
+
+      axios.post('/users', user)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     },
     goBack () {
       this.$router.push('/')

@@ -36,6 +36,12 @@
             >
               注册
             </v-btn>
+            <v-btn
+              class="mr-4"
+              @click="goBack"
+            >
+              返回
+            </v-btn>
           </div>
         </v-form>
       </v-col>
@@ -70,6 +76,9 @@ export default {
   methods: {
     validate () {
       this.$refs.form.validate()
+    },
+    goBack () {
+      this.$router.push('/')
     }
   }
 }

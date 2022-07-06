@@ -5,17 +5,35 @@
       color="white"
     >
       <v-spacer></v-spacer>
-      <template v-if="me">
+      <div v-if="me">
         <span>{{ me.name }}</span>
-      </template>
-      <template v-else>
+        <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              icon
+              plain
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>mdi-menu</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item
+            >
+              <v-list-item-title @click="signOut">退出</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </div>
+      <div v-else>
         <v-btn text>
           登陆
         </v-btn>
         <v-btn text @click="register">
           注册
         </v-btn>
-      </template>
+      </div>
     </v-app-bar>
   </div>
 </template>
@@ -36,6 +54,12 @@ export default {
   methods: {
     register () {
       this.$router.push('/register')
+    },
+    signOut () {
+      axios.post('/users/signOut')
+        .then((response) => {
+          this.$store.commit('setMe', null)
+        })
     }
   },
   created () {

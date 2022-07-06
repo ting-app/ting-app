@@ -19,7 +19,7 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item
+            <v-list-item class="pointer"
             >
               <v-list-item-title @click="signOut">退出</v-list-item-title>
             </v-list-item>
@@ -27,7 +27,7 @@
         </v-menu>
       </div>
       <div v-else>
-        <v-btn text>
+        <v-btn text @click="login">
           登陆
         </v-btn>
         <v-btn text @click="register">
@@ -55,6 +55,9 @@ export default {
     register () {
       this.$router.push('/register')
     },
+    login () {
+      this.$router.push('/login')
+    },
     signOut () {
       axios.post('/users/signOut')
         .then((response) => {
@@ -70,3 +73,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.pointer {
+  cursor: pointer;
+}
+</style>

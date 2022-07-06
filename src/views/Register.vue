@@ -93,6 +93,8 @@ export default {
         })
         .catch((error) => {
           console.error(error)
+
+          this.$toast.error(error.message)
         })
     },
     goBack () {

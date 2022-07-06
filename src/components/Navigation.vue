@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Navigation',
   data () {
@@ -25,6 +26,12 @@ export default {
     register () {
       this.$router.push('/register')
     }
+  },
+  created () {
+    axios.get('/users/me')
+      .then((response) => {
+        console.log(response)
+      })
   }
 }
 </script>

@@ -25,7 +25,7 @@
             <v-btn
               :disabled="!valid"
               class="mr-4"
-              @click="register"
+              @click="login"
             >
               登陆
             </v-btn>
@@ -64,7 +64,7 @@ export default {
     }
   },
   methods: {
-    register () {
+    login () {
       if (!this.$refs.form.validate()) {
         return
       }

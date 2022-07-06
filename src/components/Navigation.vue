@@ -4,6 +4,32 @@
       absolute
       color="white"
     >
+      <v-col cols="1">
+        <v-toolbar-title>Ting</v-toolbar-title>
+      </v-col>
+      <v-menu offset-y v-if="me">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="primary"
+            dark
+            v-bind="attrs"
+            v-on="on"
+          >
+            创建
+            <v-icon
+              right
+              dark
+            >
+              mdi-plus
+            </v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item class="pointer" @click="createProgram">
+            <v-list-item-title>节目</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <v-spacer></v-spacer>
       <div v-if="me">
         <span>{{ me.name }}</span>
@@ -19,9 +45,9 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item class="pointer"
+            <v-list-item class="pointer" @click="signOut"
             >
-              <v-list-item-title @click="signOut">退出</v-list-item-title>
+              <v-list-item-title>退出</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -63,6 +89,9 @@ export default {
         .then((response) => {
           this.$store.commit('setMe', null)
         })
+    },
+    createProgram () {
+      this.$router.push('/program')
     }
   },
   created () {

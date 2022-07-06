@@ -89,6 +89,7 @@ export default {
 
       axios.post('/users', user)
         .then((response) => {
+          this.$store.commit('setMe', response.data)
           this.$router.push('/')
         })
         .catch((error) => {

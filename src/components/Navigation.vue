@@ -5,12 +5,17 @@
       color="white"
     >
       <v-spacer></v-spacer>
-      <v-btn text>
-        登陆
-      </v-btn>
-      <v-btn text @click="register">
-        注册
-      </v-btn>
+      <template v-if="me">
+        <span>{{ me.name }}</span>
+      </template>
+      <template v-else>
+        <v-btn text>
+          登陆
+        </v-btn>
+        <v-btn text @click="register">
+          注册
+        </v-btn>
+      </template>
     </v-app-bar>
   </div>
 </template>
@@ -19,8 +24,14 @@
 import axios from 'axios'
 export default {
   name: 'Navigation',
+  computed: {
+    me () {
+      return this.$store.state.me
+    }
+  },
   data () {
-    return {}
+    return {
+    }
   },
   methods: {
     register () {
@@ -30,7 +41,7 @@ export default {
   created () {
     axios.get('/users/me')
       .then((response) => {
-        console.log(response)
+        this.$store.commit('setMe', response.data)
       })
   }
 }

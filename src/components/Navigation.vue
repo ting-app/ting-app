@@ -4,6 +4,7 @@
       absolute
       color="white"
     >
+      <v-col cols="1"></v-col>
       <v-col cols="1">
         <v-toolbar-title>Ting</v-toolbar-title>
       </v-col>
@@ -60,6 +61,7 @@
           注册
         </v-btn>
       </div>
+      <v-col cols="1"></v-col>
     </v-app-bar>
   </div>
 </template>
@@ -88,6 +90,7 @@ export default {
       axios.post('/users/signOut')
         .then((response) => {
           this.$store.commit('setMe', null)
+          this.$router.push('/')
         })
     },
     createProgram () {

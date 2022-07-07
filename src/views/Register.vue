@@ -28,7 +28,7 @@
             type="password"
             required
           ></v-text-field>
-          <div class="text-align-center">
+          <div class="text-center">
             <v-btn
               :disabled="!valid"
               class="mr-4"
@@ -104,9 +104,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.text-align-center {
-  text-align: center;
-}
-</style>

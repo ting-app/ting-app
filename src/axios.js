@@ -1,4 +1,5 @@
 import axios from 'axios'
+import UnauthorizedError from './error/unauthorized-error'
 
 axios.defaults.baseURL = process.env.VUE_APP_API_SERVER_URL
 axios.defaults.withCredentials = true
@@ -15,7 +16,11 @@ axios.interceptors.response.use((response) => {
   } else {
     const message = (data && data.error && data.error.message) ? data.error.message : 'Server error'
 
-    return Promise.reject(new Error(message))
+    if (response.status === 401) {
+      return Promise.reject(new UnauthorizedError(message))
+    } else {
+      return Promise.reject(new Error(message))
+    }
   }
 }, (error) => {
   return Promise.reject(error)

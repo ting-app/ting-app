@@ -90,7 +90,15 @@ export default {
       axios.post('/users/signOut')
         .then((response) => {
           this.$store.commit('setMe', null)
-          this.$router.push('/')
+
+          if (this.$route.name !== 'Home') {
+            this.$router.push('/')
+          }
+        })
+        .catch((error) => {
+          console.error(error)
+
+          this.$toast.error(error.message)
         })
     },
     createProgram () {
@@ -101,6 +109,9 @@ export default {
     axios.get('/users/me')
       .then((response) => {
         this.$store.commit('setMe', response.data)
+      })
+      .catch((error) => {
+        console.error(error)
       })
   }
 }

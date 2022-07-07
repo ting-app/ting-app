@@ -56,10 +56,10 @@ export default {
   name: 'Register',
   data () {
     return {
+      valid: true,
       name: '',
       password: '',
       confirmPassword: '',
-      valid: false,
       nameRules: [
         v => !!v || '姓名不能为空',
         v => v.length <= 20 || '姓名不能超过20个字符'

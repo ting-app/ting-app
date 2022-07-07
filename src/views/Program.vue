@@ -60,6 +60,7 @@ export default {
   },
   data () {
     return {
+      valid: true,
       title: '',
       titleRules: [
         v => !!v || '标题不能为空',
@@ -100,6 +101,19 @@ export default {
     }
   },
   methods: {
+    create () {
+      if (!this.$refs.form.validate()) {
+        return
+      }
+
+      const program = {
+        title: this.title,
+        language: this.language,
+        description: this.description
+      }
+
+      console.log(program)
+    },
     goBack () {
       this.$router.push('/')
     }

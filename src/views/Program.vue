@@ -52,6 +52,7 @@
 
 <script>
 import Navigation from '@/components/Navigation.vue'
+import axios from '../axios'
 
 export default {
   name: 'Program',
@@ -112,7 +113,13 @@ export default {
         description: this.description
       }
 
-      console.log(program)
+      axios.post('/programs', program)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
     goBack () {
       this.$router.push('/')

@@ -23,7 +23,8 @@
           ></v-text-field>
           <div class="text-center">
             <v-btn
-              :disabled="!valid"
+              :disabled="!valid || loading"
+              :loading="loading"
               class="mr-4"
               @click="login"
             >
@@ -50,6 +51,7 @@ export default {
   data () {
     return {
       valid: true,
+      loading: false,
       name: '',
       password: '',
       nameRules: [
@@ -69,6 +71,8 @@ export default {
         return
       }
 
+      this.loading = true
+
       const user = {
         name: this.name,
         password: this.password
@@ -83,6 +87,9 @@ export default {
           console.error(error)
 
           this.$toast.error(error.message)
+        })
+        .finally(() => {
+          this.loading = false
         })
     },
     goBack () {

@@ -31,7 +31,8 @@
           ></v-textarea>
           <div class="text-center">
             <v-btn
-              :disabled="!valid"
+              :disabled="!valid || loading"
+              :loading="loading"
               class="mr-4"
               @click="create"
             >
@@ -62,6 +63,7 @@ export default {
   data () {
     return {
       valid: true,
+      loading: false,
       title: '',
       titleRules: [
         v => !!v || '标题不能为空',
@@ -107,6 +109,8 @@ export default {
         return
       }
 
+      this.loading = true
+
       const program = {
         title: this.title,
         language: this.language,
@@ -119,6 +123,9 @@ export default {
         })
         .catch((error) => {
           console.log(error)
+        })
+        .finally(() => {
+          this.loading = false
         })
     },
     goBack () {

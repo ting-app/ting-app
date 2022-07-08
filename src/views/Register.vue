@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <v-row justify="center">
-      <v-col cols="2">
+      <v-col cols="3">
         <v-form
           ref="form"
           v-model="valid"

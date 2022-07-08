@@ -67,7 +67,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '@/axios'
+
 export default {
   name: 'Navigation',
   computed: {
@@ -102,7 +103,7 @@ export default {
         })
     },
     createProgram () {
-      this.$router.push('/program')
+      this.$router.push('/admin/program')
     }
   },
   created () {

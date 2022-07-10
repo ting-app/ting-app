@@ -103,7 +103,7 @@ export default {
         })
     },
     createProgram () {
-      this.$router.push('/admin/program')
+      this.$router.push('/admin/createProgram')
     }
   },
   created () {

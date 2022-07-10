@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
-import ProgramAdmin from '../views/admin/Program.vue'
+import CreateProgram from '../views/admin/CreateProgram.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -25,9 +25,9 @@ const routes = [
     component: Login
   },
   {
-    path: '/admin/program',
-    name: 'ProgramAdmin',
-    component: ProgramAdmin,
+    path: '/admin/createProgram',
+    name: 'CreateProgram',
+    component: CreateProgram,
     meta: {
       loginRequired: true
     }

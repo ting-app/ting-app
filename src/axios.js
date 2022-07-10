@@ -13,8 +13,10 @@ axios.interceptors.response.use((response) => {
     } else {
       return Promise.reject(new Error(data.error.message))
     }
+  } else if (response.status === 404) {
+    return null
   } else {
-    const message = (data && data.error && data.error.message) ? data.error.message : 'Server error'
+    const message = (data && data.error && data.error.message) ? data.error.message : 'Internal server error'
 
     if (response.status === 401) {
       return Promise.reject(new UnauthorizedError(message))
@@ -23,7 +25,11 @@ axios.interceptors.response.use((response) => {
     }
   }
 }, (error) => {
-  return Promise.reject(error)
+  const response = error.response
+  const data = response.data
+  const message = (data && data.error && data.error.message) ? data.error.message : 'Internal server error'
+
+  return Promise.reject(new Error(message))
 })
 
 export default axios

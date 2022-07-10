@@ -1,53 +1,73 @@
 <template>
   <div class="container">
     <Navigation></Navigation>
-    <v-row justify="center" class="program-form">
-      <v-col cols="4">
-        <div class="display-1 text-center">创建节目</div>
-        <v-form
-          ref="form"
-          v-model="valid"
-          lazy-validation
+    <v-stepper v-model="step" class="step-container">
+      <v-stepper-header>
+        <v-stepper-step
+          :complete="step > 1"
+          step="1"
         >
-          <v-text-field
-            v-model="title"
-            :counter="100"
-            :rules="titleRules"
-            label="标题"
-            required
-          ></v-text-field>
-          <v-select
-           :items="languages"
-            label="语言"
-            v-model="language"
-          ></v-select>
-          <v-textarea
-            clearable
-            clear-icon="mdi-close-circle"
-            label="描述"
-            v-model="description"
-            :counter="200"
-            :rules="descriptionRules"
-          ></v-textarea>
-          <div class="text-center">
-            <v-btn
-              :disabled="!valid || loading"
-              :loading="loading"
-              class="mr-4"
-              @click="create"
-            >
-              创建
-            </v-btn>
-            <v-btn
-              class="mr-4"
-              @click="goBack"
-            >
-              返回
-            </v-btn>
-          </div>
-        </v-form>
-      </v-col>
-    </v-row>
+          创建节目
+        </v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step
+          :complete="step > 2"
+          step="2"
+        >
+          创建听写
+        </v-stepper-step>
+      </v-stepper-header>
+      <v-stepper-items>
+        <v-stepper-content step="1">
+          <v-row justify="center" class="program-container">
+            <v-col cols="4">
+              <v-form
+                ref="form"
+                v-model="valid"
+                lazy-validation
+              >
+                <v-text-field
+                  v-model="title"
+                  :counter="100"
+                  :rules="titleRules"
+                  label="标题"
+                  required
+                ></v-text-field>
+                <v-select
+                :items="languages"
+                  label="语言"
+                  v-model="language"
+                ></v-select>
+                <v-textarea
+                  clearable
+                  clear-icon="mdi-close-circle"
+                  label="描述"
+                  v-model="description"
+                  :counter="200"
+                  :rules="descriptionRules"
+                ></v-textarea>
+                <div class="text-center">
+                  <v-btn
+                    :disabled="!valid || loading"
+                    :loading="loading"
+                    class="mr-4"
+                    @click="create"
+                  >
+                    创建
+                  </v-btn>
+                  <v-btn
+                    class="mr-4"
+                    @click="goBack"
+                  >
+                    返回
+                  </v-btn>
+                </div>
+              </v-form>
+            </v-col>
+          </v-row>
+        </v-stepper-content>
+      </v-stepper-items>
+    </v-stepper>
   </div>
 </template>
 
@@ -56,12 +76,13 @@ import Navigation from '@/components/Navigation.vue'
 import axios from '@/axios'
 
 export default {
-  name: 'Program',
+  name: 'ProgramAdmin',
   components: {
     Navigation
   },
   data () {
     return {
+      step: 1,
       valid: true,
       loading: false,
       title: '',
@@ -136,7 +157,11 @@ export default {
 </script>
 
 <style>
-.program-form {
-  margin-top: 128px;
+.step-container {
+  margin-top: 64px;
+}
+
+.program-container {
+  margin-bottom: 24px;
 }
 </style>

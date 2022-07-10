@@ -18,16 +18,16 @@ axios.interceptors.response.use((response) => {
   } else {
     const message = (data && data.error && data.error.message) ? data.error.message : 'Internal server error'
 
-    if (response.status === 401) {
-      return Promise.reject(new UnauthorizedError(message))
-    } else {
-      return Promise.reject(new Error(message))
-    }
+    return Promise.reject(new Error(message))
   }
 }, (error) => {
   const response = error.response
   const data = response.data
   const message = (data && data.error && data.error.message) ? data.error.message : 'Internal server error'
+
+  if (response.status === 401) {
+    return Promise.reject(new UnauthorizedError('Unauthorized'))
+  }
 
   return Promise.reject(new Error(message))
 })

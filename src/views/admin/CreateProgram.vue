@@ -74,6 +74,7 @@
 <script>
 import Navigation from '@/components/Navigation.vue'
 import axios from '@/axios'
+import UnauthorizedError from '@/error/unauthorized-error'
 
 export default {
   name: 'ProgramAdmin',
@@ -143,7 +144,13 @@ export default {
           console.log(response)
         })
         .catch((error) => {
-          console.log(error)
+          console.error(error)
+
+          if (error instanceof UnauthorizedError) {
+            this.$router.push('/login')
+          } else {
+            this.$toast.error(error.message)
+          }
         })
         .finally(() => {
           this.loading = false

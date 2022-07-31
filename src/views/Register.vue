@@ -11,20 +11,20 @@
             v-model="name"
             :counter="20"
             :rules="nameRules"
-            label="姓名"
+            label="姓名*"
             required
           ></v-text-field>
           <v-text-field
             v-model="password"
             :rules="passwordRules"
-            label="密码"
+            label="密码*"
             type="password"
             required
           ></v-text-field>
           <v-text-field
             v-model="confirmPassword"
             :rules="confirmPasswordRules"
-            label="确认密码"
+            label="确认密码*"
             type="password"
             required
           ></v-text-field>

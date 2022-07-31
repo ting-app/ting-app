@@ -30,18 +30,18 @@
                   v-model="title"
                   :counter="100"
                   :rules="titleRules"
-                  label="标题"
+                  label="标题*"
                   required
                 ></v-text-field>
                 <v-select
                 :items="languages"
-                  label="语言"
+                  label="语言*"
                   v-model="language"
                 ></v-select>
                 <v-textarea
                   clearable
                   clear-icon="mdi-close-circle"
-                  label="描述"
+                  label="描述*"
                   v-model="description"
                   :counter="200"
                   :rules="descriptionRules"
@@ -51,7 +51,7 @@
                     :disabled="!valid || loading"
                     :loading="loading"
                     class="mr-4"
-                    @click="create"
+                    @click="createProgram"
                   >
                     创建
                   </v-btn>
@@ -68,23 +68,31 @@
         </v-stepper-content>
         <v-stepper-content step="2">
           <v-row justify="center" class="program-container">
-
+            <v-col cols="4">
+              <div v-if="tings.length === 0" class="text-center">
+                <v-btn color="primary" @click="createTing">添加听写</v-btn>
+              </div>
+            </v-col>
           </v-row>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
+    <CreateTing></CreateTing>
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/Navigation.vue'
+import CreateTing from '@/components/CreateTing'
 import axios from '@/axios'
 import UnauthorizedError from '@/error/unauthorized-error'
+import eventBus from '@/event-bus'
 
 export default {
-  name: 'ProgramAdmin',
+  name: 'CreateProgram',
   components: {
-    Navigation
+    Navigation,
+    CreateTing
   },
   data () {
     return {
@@ -127,11 +135,12 @@ export default {
           text: '西班牙语',
           value: 6
         }
-      ]
+      ],
+      tings: []
     }
   },
   methods: {
-    create () {
+    createProgram () {
       if (!this.$refs.form.validate()) {
         return
       }
@@ -163,6 +172,9 @@ export default {
     },
     goBack () {
       this.$router.push('/')
+    },
+    createTing () {
+      eventBus.$emit('createTing')
     }
   }
 }

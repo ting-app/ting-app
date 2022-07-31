@@ -38,6 +38,11 @@
               :counter="2000"
               :rules="contentRules"
             ></v-textarea>
+            <v-file-input
+              v-model="audioFile"
+              :rules="audioFileRules"
+              label="听力文件*"
+            ></v-file-input>
           </v-form>
         </v-card-text>
         <v-card-actions>
@@ -86,6 +91,10 @@ export default {
       contentRules: [
         v => !!v || '原文不能为空',
         v => v.length <= 2000 || '原文不能超过2000个字符'
+      ],
+      audioFile: '',
+      audioFileRules: [
+        v => !!v || '听力文件不能为空'
       ]
     }
   },

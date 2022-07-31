@@ -66,6 +66,11 @@
             </v-col>
           </v-row>
         </v-stepper-content>
+        <v-stepper-content step="2">
+          <v-row justify="center" class="program-container">
+
+          </v-row>
+        </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
   </div>
@@ -141,7 +146,7 @@ export default {
 
       axios.post('/programs', program)
         .then((response) => {
-          console.log(response)
+          this.step = 2
         })
         .catch((error) => {
           console.error(error)

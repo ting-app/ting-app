@@ -109,7 +109,7 @@ export default {
   created () {
     axios.get('/users/me')
       .then((response) => {
-        this.$store.commit('setMe', response.data)
+        this.$store.commit('setMe', response)
       })
       .catch((error) => {
         console.error(error)

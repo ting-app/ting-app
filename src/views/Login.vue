@@ -80,7 +80,7 @@ export default {
 
       axios.post('/users/login', user)
         .then((response) => {
-          this.$store.commit('setMe', response.data)
+          this.$store.commit('setMe', response)
           this.$router.push('/')
         })
         .catch((error) => {

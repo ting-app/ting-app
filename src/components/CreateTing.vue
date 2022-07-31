@@ -7,95 +7,54 @@
     >
       <v-card>
         <v-card-title>
-          <span class="text-h5">User Profile</span>
+          <span class="text-h5">创建听写</span>
         </v-card-title>
         <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal first name*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal middle name"
-                  hint="example of helper text only on focus"
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal last name*"
-                  hint="example of persistent helper text"
-                  persistent-hint
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  label="Email*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  label="Password*"
-                  type="password"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Age*"
-                  required
-                ></v-select>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-autocomplete
-                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                  label="Interests"
-                  multiple
-                ></v-autocomplete>
-              </v-col>
-            </v-row>
-          </v-container>
-          <small>*indicates required field</small>
+          <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation
+          >
+            <v-text-field
+              v-model="title"
+              :counter="100"
+              :rules="titleRules"
+              label="标题*"
+              required
+            ></v-text-field>
+            <v-textarea
+              clearable
+              clear-icon="mdi-close-circle"
+              label="描述*"
+              v-model="description"
+              :counter="200"
+              :rules="descriptionRules"
+            ></v-textarea>
+            <v-textarea
+              clearable
+              clear-icon="mdi-close-circle"
+              label="原文*"
+              v-model="content"
+              :counter="2000"
+              :rules="contentRules"
+            ></v-textarea>
+          </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
             color="blue darken-1"
             text
-            @click="dialog = false"
+            @click="close"
           >
-            Close
+            取消
           </v-btn>
           <v-btn
             color="blue darken-1"
             text
-            @click="dialog = false"
+            @click="create"
           >
-            Save
+            创建
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -110,7 +69,37 @@ export default {
   name: 'CreateTing',
   data () {
     return {
-      dialog: false
+      dialog: false,
+      valid: true,
+      loading: false,
+      title: '',
+      titleRules: [
+        v => !!v || '标题不能为空',
+        v => v.length <= 100 || '标题不能超过100个字符'
+      ],
+      description: '',
+      descriptionRules: [
+        v => !!v || '描述不能为空',
+        v => v.length <= 200 || '描述不能超过200个字符'
+      ],
+      content: '',
+      contentRules: [
+        v => !!v || '原文不能为空',
+        v => v.length <= 2000 || '原文不能超过2000个字符'
+      ]
+    }
+  },
+  methods: {
+    close () {
+      this.$refs.form.reset()
+      this.dialog = false
+    },
+    create () {
+      if (!this.$refs.form.validate()) {
+        return
+      }
+
+      this.loading = true
     }
   },
   mounted () {

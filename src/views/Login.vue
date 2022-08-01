@@ -80,6 +80,7 @@ export default {
 
       axios.post('/users/login', user)
         .then((response) => {
+          localStorage.setItem('me', JSON.stringify(response))
           this.$store.commit('setMe', response)
           this.$router.push('/')
         })

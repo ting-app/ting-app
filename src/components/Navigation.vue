@@ -90,6 +90,7 @@ export default {
     signOut () {
       axios.post('/users/signOut')
         .then((response) => {
+          localStorage.removeItem('me')
           this.$store.commit('setMe', null)
 
           if (this.$route.name !== 'Home') {
@@ -105,15 +106,6 @@ export default {
     createProgram () {
       this.$router.push('/admin/createProgram')
     }
-  },
-  created () {
-    axios.get('/users/me')
-      .then((response) => {
-        this.$store.commit('setMe', response)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
   }
 }
 </script>

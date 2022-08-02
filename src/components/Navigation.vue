@@ -88,7 +88,7 @@ export default {
       this.$router.push('/login')
     },
     signOut () {
-      axios.post('/users/signOut')
+      axios.post('/auth/signOut')
         .then((response) => {
           localStorage.removeItem('me')
           this.$store.commit('setMe', null)

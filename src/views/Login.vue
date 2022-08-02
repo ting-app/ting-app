@@ -79,7 +79,7 @@ export default {
         password: this.password
       }
 
-      axios.post('/users/login', user)
+      axios.post('/auth/login', user)
         .then((response) => {
           localStorage.setItem('me', JSON.stringify(response))
           this.$store.commit('setMe', response)

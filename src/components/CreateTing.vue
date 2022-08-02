@@ -77,6 +77,7 @@ export default {
   name: 'CreateTing',
   data () {
     return {
+      programId: 0,
       dialog: false,
       valid: true,
       loading: false,
@@ -128,13 +129,17 @@ export default {
         })
         .then((fileUrl) => {
           const ting = {
+            programId: this.programId,
             title: this.title,
             description: this.description,
             content: this.content,
             audioUrl: fileUrl
           }
 
-          console.log(ting)
+          return axios.post('/tings', ting)
+        })
+        .then((response) => {
+          console.log(response)
         })
         .catch((error) => {
           console.error(error)
@@ -150,9 +155,10 @@ export default {
         })
     }
   },
-  mounted () {
-    eventBus.$on('createTing', () => {
+  created () {
+    eventBus.$on('createTing', (programId) => {
       this.dialog = true
+      this.programId = programId
     })
   }
 }

@@ -105,6 +105,7 @@ export default {
   },
   data () {
     return {
+      programId: 0,
       step: 1,
       valid: true,
       loading: false,
@@ -165,6 +166,7 @@ export default {
       axios.post('/programs', program)
         .then((response) => {
           this.step = 2
+          this.programId = response.id
         })
         .catch((error) => {
           console.error(error)
@@ -183,7 +185,7 @@ export default {
       this.$router.push('/')
     },
     createTing () {
-      eventBus.$emit('createTing')
+      eventBus.$emit('createTing', this.programId)
     }
   }
 }

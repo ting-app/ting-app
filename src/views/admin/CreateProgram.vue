@@ -70,7 +70,15 @@
           <v-row justify="center" class="program-container">
             <v-col cols="4">
               <div v-if="tings.length === 0" class="text-center">
-                <v-btn color="primary" @click="createTing">添加听写</v-btn>
+                <v-btn color="primary" @click="createTing">
+                  添加听写
+                  <v-icon
+                    right
+                    dark
+                  >
+                    mdi-plus
+                  </v-icon>
+                </v-btn>
               </div>
             </v-col>
           </v-row>

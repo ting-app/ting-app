@@ -7,7 +7,7 @@
     >
       <v-card>
         <v-card-title>
-          <span class="text-h5">创建听写</span>
+          <span class="text-h5">添加听写</span>
         </v-card-title>
         <v-card-text>
           <v-form
@@ -39,6 +39,7 @@
               :rules="contentRules"
             ></v-textarea>
             <v-file-input
+              accept="audio/mp3"
               v-model="audioFile"
               :rules="audioFileRules"
               label="听力文件（mp3 格式）*"
@@ -48,18 +49,16 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            color="blue darken-1"
-            text
             @click="close"
           >
             取消
           </v-btn>
           <v-btn
-            color="blue darken-1"
-            text
+            :disabled="!valid || loading"
+            :loading="loading"
             @click="create"
           >
-            创建
+            添加
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -109,6 +108,16 @@ export default {
       }
 
       this.loading = true
+
+      const ting = {
+        title: this.title,
+        description: this.description,
+        content: this.content
+      }
+      const file = this.audioFile
+
+      console.log(ting)
+      console.log(file)
     }
   },
   mounted () {

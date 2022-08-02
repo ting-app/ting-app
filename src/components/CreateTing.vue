@@ -41,7 +41,7 @@
             <v-file-input
               v-model="audioFile"
               :rules="audioFileRules"
-              label="听力文件*"
+              label="听力文件（mp3 格式）*"
             ></v-file-input>
           </v-form>
         </v-card-text>
@@ -80,19 +80,19 @@ export default {
       title: '',
       titleRules: [
         v => !!v || '标题不能为空',
-        v => v.length <= 100 || '标题不能超过100个字符'
+        v => (v && v.length <= 100) || '标题不能超过100个字符'
       ],
       description: '',
       descriptionRules: [
         v => !!v || '描述不能为空',
-        v => v.length <= 200 || '描述不能超过200个字符'
+        v => (v && v.length <= 200) || '描述不能超过200个字符'
       ],
       content: '',
       contentRules: [
         v => !!v || '原文不能为空',
-        v => v.length <= 2000 || '原文不能超过2000个字符'
+        v => (v && v.length <= 2000) || '原文不能超过2000个字符'
       ],
-      audioFile: '',
+      audioFile: null,
       audioFileRules: [
         v => !!v || '听力文件不能为空'
       ]

@@ -49,16 +49,17 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            @click="close"
-          >
-            取消
-          </v-btn>
-          <v-btn
             :disabled="!valid || loading"
             :loading="loading"
             @click="create"
           >
             添加
+          </v-btn>
+          <v-btn
+            :disabled="loading"
+            @click="close"
+          >
+            取消
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -68,6 +69,9 @@
 
 <script>
 import eventBus from '@/event-bus'
+import axios from '@/axios'
+import { BlobServiceClient } from '@azure/storage-blob'
+import UnauthorizedError from '@/error/unauthorized-error'
 
 export default {
   name: 'CreateTing',
@@ -109,15 +113,41 @@ export default {
 
       this.loading = true
 
-      const ting = {
-        title: this.title,
-        description: this.description,
-        content: this.content
-      }
       const file = this.audioFile
 
-      console.log(ting)
-      console.log(file)
+      axios.get('/blobs/sas')
+        .then((response) => {
+          const fileName = file.name + ''
+          const blobServiceClient = new BlobServiceClient(response)
+          const containerClient = blobServiceClient.getContainerClient('')
+          const blockBlobClient = containerClient.getBlockBlobClient(fileName)
+          const fileUrl = response.substring(0, response.indexOf('?')) + '/' + fileName
+
+          return blockBlobClient.uploadData(file)
+            .then((_) => fileUrl)
+        })
+        .then((fileUrl) => {
+          const ting = {
+            title: this.title,
+            description: this.description,
+            content: this.content,
+            audioUrl: fileUrl
+          }
+
+          console.log(ting)
+        })
+        .catch((error) => {
+          console.error(error)
+
+          if (error instanceof UnauthorizedError) {
+            this.$router.push('/login')
+          } else {
+            this.$toast.error(error.message)
+          }
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
   },
   mounted () {

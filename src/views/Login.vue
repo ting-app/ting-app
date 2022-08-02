@@ -31,6 +31,7 @@
               登陆
             </v-btn>
             <v-btn
+              :disabled="loading"
               class="mr-4"
               @click="goBack"
             >

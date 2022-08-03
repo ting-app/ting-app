@@ -71,7 +71,7 @@
           <v-row justify="center" class="program-container">
             <v-col cols="4">
               <div class="text-center">
-                <v-btn color="primary" @click="createTing">
+                <v-btn class="ma-2" @click="createTing">
                   添加听写
                   <v-icon
                     right
@@ -80,6 +80,7 @@
                     mdi-plus
                   </v-icon>
                 </v-btn>
+                <v-btn class="ma-2">完成</v-btn>
               </div>
             </v-col>
           </v-row>

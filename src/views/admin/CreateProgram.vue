@@ -96,6 +96,8 @@ import CreateTing from '@/components/CreateTing'
 import axios from '@/axios'
 import UnauthorizedError from '@/error/unauthorized-error'
 import eventBus from '@/event-bus'
+import Languages from '@/languages'
+import Messages from '@/messages'
 
 export default {
   name: 'CreateProgram',
@@ -120,32 +122,7 @@ export default {
         v => v.length <= 200 || '描述不能超过200个字符'
       ],
       language: 1,
-      languages: [
-        {
-          text: '英语',
-          value: 1
-        },
-        {
-          text: '日语',
-          value: 2
-        },
-        {
-          text: '韩语',
-          value: 3
-        },
-        {
-          text: '法语',
-          value: 4
-        },
-        {
-          text: '德语',
-          value: 5
-        },
-        {
-          text: '西班牙语',
-          value: 6
-        }
-      ],
+      languages: Languages,
       tings: []
     }
   },
@@ -185,7 +162,7 @@ export default {
       this.$router.push('/')
     },
     createTing () {
-      eventBus.$emit('createTing', this.programId)
+      eventBus.$emit(Messages.CREATE_TING, this.programId)
     }
   }
 }

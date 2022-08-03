@@ -72,6 +72,7 @@ import eventBus from '@/event-bus'
 import axios from '@/axios'
 import { BlobServiceClient } from '@azure/storage-blob'
 import UnauthorizedError from '@/error/unauthorized-error'
+import Messages from '@/messages'
 
 export default {
   name: 'CreateTing',
@@ -156,7 +157,7 @@ export default {
     }
   },
   created () {
-    eventBus.$on('createTing', (programId) => {
+    eventBus.$on(Messages.CREATE_TING, (programId) => {
       this.dialog = true
       this.programId = programId
     })

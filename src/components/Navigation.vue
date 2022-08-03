@@ -5,9 +5,7 @@
       color="white"
     >
       <v-col cols="1"></v-col>
-      <v-col cols="1">
-        <v-toolbar-title>Ting</v-toolbar-title>
-      </v-col>
+      <v-toolbar-title class="navigation-tab pointer" @click="goToHome">Ting</v-toolbar-title>
       <v-menu offset-y v-if="me">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -105,6 +103,9 @@ export default {
     },
     createProgram () {
       this.$router.push('/admin/createProgram')
+    },
+    goToHome () {
+      this.$router.push('/')
     }
   }
 }
@@ -113,5 +114,8 @@ export default {
 <style>
 .pointer {
   cursor: pointer;
+}
+.navigation-tab {
+  margin: 12px;
 }
 </style>

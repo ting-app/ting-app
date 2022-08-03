@@ -70,7 +70,7 @@
         <v-stepper-content step="2">
           <v-row justify="center" class="program-container">
             <v-col cols="4">
-              <div v-if="tings.length === 0" class="text-center">
+              <div class="text-center">
                 <v-btn color="primary" @click="createTing">
                   添加听写
                   <v-icon
@@ -83,6 +83,7 @@
               </div>
             </v-col>
           </v-row>
+          <TingList></TingList>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -93,6 +94,7 @@
 <script>
 import Navigation from '@/components/Navigation.vue'
 import CreateTing from '@/components/CreateTing'
+import TingList from '@/components/TingList'
 import axios from '@/axios'
 import UnauthorizedError from '@/error/unauthorized-error'
 import eventBus from '@/event-bus'
@@ -102,6 +104,7 @@ import Messages from '@/messages'
 export default {
   name: 'CreateProgram',
   components: {
+    TingList,
     Navigation,
     CreateTing
   },
@@ -122,8 +125,7 @@ export default {
         v => v.length <= 200 || '描述不能超过200个字符'
       ],
       language: 1,
-      languages: Languages,
-      tings: []
+      languages: Languages
     }
   },
   methods: {

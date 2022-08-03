@@ -140,7 +140,9 @@ export default {
           return axios.post('/tings', ting)
         })
         .then((response) => {
-          console.log(response)
+          this.close()
+
+          eventBus.$emit(Messages.TING_CREATED, response)
         })
         .catch((error) => {
           console.error(error)

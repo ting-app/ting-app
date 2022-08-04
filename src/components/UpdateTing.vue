@@ -39,6 +39,21 @@
               :counter="2000"
               :rules="contentRules"
             ></v-textarea>
+            <template v-if="!reUploadFile">
+              <span>听力文件：{{ fileName }}</span>
+              <v-btn class="ma-2" @click="reUploadFile = true">重新上传</v-btn>
+            </template>
+            <v-file-input
+              accept="audio/mp3"
+              v-model="audioFile"
+              :rules="audioFileRules"
+              label="听力文件（mp3 格式）*"
+              v-if="reUploadFile"
+            >
+              <template v-slot:append-outer>
+                <v-btn @click="reUploadFile = false">取消上传</v-btn>
+              </template>
+            </v-file-input>
           </v-form>
         </v-card-text>
         <v-card-actions>
@@ -72,6 +87,17 @@ import { randomFileName } from '@/util'
 
 export default {
   name: 'UpdateTing',
+  computed: {
+    fileName () {
+      if (!this.ting) {
+        return ''
+      }
+
+      const indexOfSlash = this.ting.audioUrl.lastIndexOf('/')
+
+      return this.ting.audioUrl.substring(indexOfSlash + 1)
+    }
+  },
   data () {
     return {
       dialog: false,
@@ -89,13 +115,19 @@ export default {
         v => !!v || '原文不能为空',
         v => (v && v.length <= 2000) || '原文不能超过2000个字符'
       ],
-      ting: null
+      audioFile: null,
+      audioFileRules: [
+        v => !!v || '听力文件不能为空'
+      ],
+      ting: null,
+      reUploadFile: false
     }
   },
   methods: {
     close () {
       this.$refs.form.reset()
       this.dialog = false
+      this.reUploadFile = false
     },
     update () {
       if (!this.$refs.form.validate()) {

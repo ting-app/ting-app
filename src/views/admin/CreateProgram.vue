@@ -94,8 +94,8 @@
 
 <script>
 import Navigation from '@/components/Navigation.vue'
-import CreateTing from '@/components/CreateTing'
-import TingList from '@/components/TingList'
+import CreateTing from '@/components/CreateTing.vue'
+import TingList from '@/components/TingList.vue'
 import axios from '@/axios'
 import UnauthorizedError from '@/error/unauthorized-error'
 import eventBus from '@/event-bus'

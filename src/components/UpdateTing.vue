@@ -7,16 +7,17 @@
     >
       <v-card>
         <v-card-title>
-          <span class="text-h5">添加听写</span>
+          <span class="text-h5">更新听写</span>
         </v-card-title>
         <v-card-text>
           <v-form
             ref="form"
             v-model="valid"
             lazy-validation
+            v-if="ting"
           >
             <v-text-field
-              v-model="title"
+              v-model="ting.title"
               :counter="100"
               :rules="titleRules"
               label="标题*"
@@ -26,7 +27,7 @@
               clearable
               clear-icon="mdi-close-circle"
               label="描述*"
-              v-model="description"
+              v-model="ting.description"
               :counter="200"
               :rules="descriptionRules"
             ></v-textarea>
@@ -34,16 +35,10 @@
               clearable
               clear-icon="mdi-close-circle"
               label="原文*"
-              v-model="content"
+              v-model="ting.content"
               :counter="2000"
               :rules="contentRules"
             ></v-textarea>
-            <v-file-input
-              accept="audio/mp3"
-              v-model="audioFile"
-              :rules="audioFileRules"
-              label="听力文件（mp3 格式）*"
-            ></v-file-input>
           </v-form>
         </v-card-text>
         <v-card-actions>
@@ -51,9 +46,9 @@
           <v-btn
             :disabled="!valid || loading"
             :loading="loading"
-            @click="create"
+            @click="update"
           >
-            添加
+            更新
           </v-btn>
           <v-btn
             :disabled="loading"
@@ -76,32 +71,25 @@ import Messages from '@/messages'
 import { randomFileName } from '@/util'
 
 export default {
-  name: 'CreateTing',
+  name: 'UpdateTing',
   data () {
     return {
-      programId: 0,
       dialog: false,
       valid: true,
       loading: false,
-      title: '',
       titleRules: [
         v => !!v || '标题不能为空',
         v => (v && v.length <= 100) || '标题不能超过100个字符'
       ],
-      description: '',
       descriptionRules: [
         v => !!v || '描述不能为空',
         v => (v && v.length <= 200) || '描述不能超过200个字符'
       ],
-      content: '',
       contentRules: [
         v => !!v || '原文不能为空',
         v => (v && v.length <= 2000) || '原文不能超过2000个字符'
       ],
-      audioFile: null,
-      audioFileRules: [
-        v => !!v || '听力文件不能为空'
-      ]
+      ting: null
     }
   },
   methods: {
@@ -109,7 +97,7 @@ export default {
       this.$refs.form.reset()
       this.dialog = false
     },
-    create () {
+    update () {
       if (!this.$refs.form.validate()) {
         return
       }
@@ -143,7 +131,7 @@ export default {
         .then((response) => {
           this.close()
 
-          eventBus.$emit(Messages.TING_CREATED, response)
+          eventBus.$emit(Messages.TING_UPDATED, response)
         })
         .catch((error) => {
           console.error(error)
@@ -160,9 +148,9 @@ export default {
     }
   },
   created () {
-    eventBus.$on(Messages.CREATE_TING, (programId) => {
+    eventBus.$on(Messages.UPDATE_TING, (ting) => {
       this.dialog = true
-      this.programId = programId
+      this.ting = ting
     })
   }
 }

@@ -150,7 +150,12 @@ export default {
   created () {
     eventBus.$on(Messages.UPDATE_TING, (ting) => {
       this.dialog = true
-      this.ting = ting
+      this.ting = {
+        title: ting.title,
+        description: ting.description,
+        content: ting.content,
+        audioUrl: ting.audioUrl
+      }
     })
   }
 }

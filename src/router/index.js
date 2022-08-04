@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import CreateProgram from '../views/admin/CreateProgram.vue'
+import Program from '../views/Program.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -31,6 +32,11 @@ const routes = [
     meta: {
       loginRequired: true
     }
+  },
+  {
+    path: '/programs/:id',
+    name: 'Program',
+    component: Program
   }
 ]
 

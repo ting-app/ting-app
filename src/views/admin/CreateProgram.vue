@@ -80,7 +80,7 @@
                     mdi-plus
                   </v-icon>
                 </v-btn>
-                <v-btn class="ma-2">完成</v-btn>
+                <v-btn class="ma-2" @click="complete">完成</v-btn>
               </div>
             </v-col>
           </v-row>
@@ -166,6 +166,9 @@ export default {
     },
     createTing () {
       eventBus.$emit(Messages.CREATE_TING, this.programId)
+    },
+    complete () {
+      this.$router.push(`/programs/${this.programId}`)
     }
   }
 }

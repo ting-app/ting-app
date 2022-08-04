@@ -12,6 +12,7 @@
         <tr>
           <th class="text-center">标题</th>
           <th class="text-center">描述</th>
+          <th class="text-center">听力文件</th>
           <th class="text-center">创建时间</th>
           <th class="text-center">更新时间</th>
           <th class="text-center">操作</th>
@@ -21,6 +22,7 @@
         <tr v-for="(ting, index) in tings" :key="ting.id">
           <td class="text-center">{{ ting.title }}</td>
           <td class="text-center">{{ ting.description }}</td>
+          <td class="text-center">{{ fileName(ting.audioUrl) }}</td>
           <td class="text-center">{{ ting.createdAt }}</td>
           <td class="text-center">{{ ting.updatedAt }}</td>
           <td class="text-center">
@@ -54,6 +56,11 @@ export default {
     }
   },
   methods: {
+    fileName (audioUrl) {
+      const indexOfSlash = audioUrl.lastIndexOf('/')
+
+      return audioUrl.substring(indexOfSlash + 1)
+    },
     tingCreated (ting) {
       this.tings.push(ting)
     },

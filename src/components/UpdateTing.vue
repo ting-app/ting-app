@@ -136,35 +136,42 @@ export default {
 
       this.loading = true
 
-      const file = this.audioFile
+      let promise = null
 
-      axios.get('/blobs/sas')
-        .then((response) => {
-          const fileName = randomFileName(file.name)
-          const blobServiceClient = new BlobServiceClient(response)
-          const containerClient = blobServiceClient.getContainerClient('')
-          const blockBlobClient = containerClient.getBlockBlobClient(fileName)
-          const fileUrl = response.substring(0, response.indexOf('?')) + '/' + fileName
+      if (this.reUploadFile) {
+        promise = axios.get('/blobs/sas')
+          .then((response) => {
+            const file = this.audioFile
+            const fileName = randomFileName(file.name)
+            const blobServiceClient = new BlobServiceClient(response)
+            const containerClient = blobServiceClient.getContainerClient('')
+            const blockBlobClient = containerClient.getBlockBlobClient(fileName)
+            const fileUrl = response.substring(0, response.indexOf('?')) + '/' + fileName
 
-          return blockBlobClient.uploadData(file)
-            .then((_) => fileUrl)
-        })
-        .then((fileUrl) => {
-          const ting = {
-            programId: this.programId,
-            title: this.title,
-            description: this.description,
-            content: this.content,
-            audioUrl: fileUrl
-          }
+            return blockBlobClient.uploadData(file)
+              .then((_) => fileUrl)
+          })
+          .then((fileUrl) => {
+            const ting = {
+              ...this.ting,
+              audioUrl: fileUrl
+            }
 
-          return axios.post('/tings', ting)
-        })
-        .then((response) => {
-          this.close()
+            return axios.put(`/tings/${ting.id}`, ting)
+          })
+      } else {
+        const ting = {
+          ...this.ting
+        }
 
-          eventBus.$emit(Messages.TING_UPDATED, response)
-        })
+        promise = axios.put(`/tings/${ting.id}`, ting)
+      }
+
+      promise.then((response) => {
+        this.close()
+
+        eventBus.$emit(Messages.TING_UPDATED, response)
+      })
         .catch((error) => {
           console.error(error)
 
@@ -183,10 +190,7 @@ export default {
     eventBus.$on(Messages.UPDATE_TING, (ting) => {
       this.dialog = true
       this.ting = {
-        title: ting.title,
-        description: ting.description,
-        content: ting.content,
-        audioUrl: ting.audioUrl
+        ...ting
       }
     })
   }

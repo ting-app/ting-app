@@ -67,6 +67,13 @@ export default {
     updateTing (ting) {
       eventBus.$emit(Messages.UPDATE_TING, ting)
     },
+    tingUpdated (ting) {
+      const index = this.tings.findIndex((it) => it.id === ting.id)
+
+      if (index >= 0) {
+        this.$set(this.tings, index, ting)
+      }
+    },
     deleteTing (i, id) {
       this.loading = true
 
@@ -90,6 +97,7 @@ export default {
   },
   created () {
     eventBus.$on(Messages.TING_CREATED, this.tingCreated)
+    eventBus.$on(Messages.TING_UPDATED, this.tingUpdated)
   }
 }
 </script>

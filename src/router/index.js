@@ -5,6 +5,7 @@ import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import CreateProgram from '../views/admin/CreateProgram.vue'
 import Program from '../views/Program.vue'
+import Ting from '../views/Ting.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -37,6 +38,11 @@ const routes = [
     path: '/programs/:id',
     name: 'Program',
     component: Program
+  },
+  {
+    path: '/tings/:id',
+    name: 'Ting',
+    component: Ting
   }
 ]
 

@@ -74,10 +74,6 @@ export default {
       return this.$store.state.me
     }
   },
-  data () {
-    return {
-    }
-  },
   methods: {
     register () {
       this.$router.push('/register')

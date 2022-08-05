@@ -18,8 +18,8 @@
           <td class="text-center">{{ ting.title }}</td>
           <td class="text-center">{{ ting.description }}</td>
           <td class="text-center">{{ fileName(ting.audioUrl) }}</td>
-          <td class="text-center">{{ ting.createdAt }}</td>
-          <td class="text-center">{{ ting.updatedAt }}</td>
+          <td class="text-center">{{ format(ting.createdAt) }}</td>
+          <td class="text-center">{{ format(ting.updatedAt) }}</td>
           <td class="text-center">
             <v-btn class="ma-2" @click="updateTing(ting)">编辑</v-btn>
             <v-btn color="error" class="ma-2" @click="deleteTing(index, ting.id)">删除</v-btn>
@@ -39,6 +39,7 @@ import axios from '@/axios'
 import UnauthorizedError from '@/error/unauthorized-error'
 import UpdateTing from '@/components/UpdateTing.vue'
 import Overlay from '@/components/Overlay.vue'
+import { formatDateTime } from '@/util'
 
 export default {
   name: 'TingList',
@@ -53,6 +54,9 @@ export default {
     }
   },
   methods: {
+    format (dateTime) {
+      return formatDateTime(dateTime)
+    },
     fileName (audioUrl) {
       const indexOfSlash = audioUrl.lastIndexOf('/')
 

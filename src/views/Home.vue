@@ -2,6 +2,18 @@
   <div class="container">
     <Overlay :loading="loading"></Overlay>
     <Navigation></Navigation>
+    <div class="container ma-10">
+      <v-row v-for="program in programs" :key="program.id" justify="center">
+        <v-col cols="4">
+          <p>
+            <router-link :to="`/programs/${program.id}`" class="text-h6">{{ program.title }}</router-link>
+          </p>
+          <p class="text-body-1">{{ program.description }}</p>
+          <p class="text-caption">创建时间：{{ program.createdAt }}</p>
+          <hr>
+        </v-col>
+      </v-row>
+    </div>
   </div>
 </template>
 
@@ -40,3 +52,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>

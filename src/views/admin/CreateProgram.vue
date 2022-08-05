@@ -174,7 +174,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .step-container {
   margin-top: 64px;
 }

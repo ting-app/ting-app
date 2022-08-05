@@ -1,8 +1,9 @@
 <template>
-  <v-overlay :value="loading">
+  <v-overlay :value="loading" opacity="0">
     <v-progress-circular
       indeterminate
-      size="64"
+      color="primary"
+      size="100"
     ></v-progress-circular>
   </v-overlay>
 </template>

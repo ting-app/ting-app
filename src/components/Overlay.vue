@@ -3,7 +3,7 @@
     <v-progress-circular
       indeterminate
       color="primary"
-      size="100"
+      size="64"
     ></v-progress-circular>
   </v-overlay>
 </template>
@@ -13,7 +13,10 @@ export default {
   name: 'Overlay',
   props: {
     loading: {
-      type: Boolean
+      type: Boolean,
+      default () {
+        return false
+      }
     }
   }
 }

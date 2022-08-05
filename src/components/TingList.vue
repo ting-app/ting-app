@@ -1,11 +1,6 @@
 <template>
   <div>
-    <v-overlay :value="loading">
-      <v-progress-circular
-        indeterminate
-        size="64"
-      ></v-progress-circular>
-    </v-overlay>
+    <Overlay :loading="loading"></Overlay>
     <v-simple-table v-if="tings.length > 0" class="ma-10">
       <template v-slot:default>
         <thead>
@@ -43,10 +38,12 @@ import Messages from '@/messages'
 import axios from '@/axios'
 import UnauthorizedError from '@/error/unauthorized-error'
 import UpdateTing from '@/components/UpdateTing.vue'
+import Overlay from '@/components/Overlay.vue'
 
 export default {
   name: 'TingList',
   components: {
+    Overlay,
     UpdateTing
   },
   data () {

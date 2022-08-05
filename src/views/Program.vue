@@ -1,22 +1,19 @@
 <template>
   <div class="container">
-    <v-overlay :value="loading">
-      <v-progress-circular
-        indeterminate
-        size="64"
-      ></v-progress-circular>
-    </v-overlay>
+    <Overlay :loading="loading"></Overlay>
     <Navigation></Navigation>
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/Navigation.vue'
+import Overlay from '@/components/Overlay.vue'
 import axios from '@/axios'
 
 export default {
   name: 'Program',
   components: {
+    Overlay,
     Navigation
   },
   data () {

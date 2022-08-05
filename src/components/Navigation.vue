@@ -4,7 +4,7 @@
       absolute
       color="white"
     >
-      <v-col cols="1"></v-col>
+      <v-col cols="2"></v-col>
       <v-toolbar-title class="navigation-tab pointer" @click="goToHome">Ting</v-toolbar-title>
       <v-menu offset-y v-if="me">
         <template v-slot:activator="{ on, attrs }">
@@ -59,7 +59,7 @@
           注册
         </v-btn>
       </div>
-      <v-col cols="1"></v-col>
+      <v-col cols="2"></v-col>
     </v-app-bar>
   </div>
 </template>

@@ -38,23 +38,40 @@ export default {
   methods: {
     format (dateTime) {
       return formatDateTime(dateTime)
+    },
+    getPrograms () {
+      this.loading = true
+
+      let url = '/programs'
+      const language = this.$route.query.language
+
+      if (language) {
+        url += `?language=${language}`
+      }
+
+      axios.get(url)
+        .then((response) => {
+          this.programs = response
+        })
+        .catch((error) => {
+          console.error(error)
+
+          this.$toast.error(error.message)
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
   },
   created () {
-    this.loading = true
+    this.getPrograms()
+  },
+  beforeRouteUpdate (to, from, next) {
+    next()
 
-    axios.get('/programs')
-      .then((response) => {
-        this.programs = response
-      })
-      .catch((error) => {
-        console.error(error)
-
-        this.$toast.error(error.message)
-      })
-      .finally(() => {
-        this.loading = false
-      })
+    if (to.query.language !== from.query.language) {
+      this.getPrograms()
+    }
   }
 }
 </script>

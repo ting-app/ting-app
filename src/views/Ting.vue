@@ -6,6 +6,30 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
+          <hr>
+          <div class="container">
+            <p class="text-h6">描述：</p>
+            <p class="text-body-1">{{ ting.description }}</p>
+          </div>
+          <hr>
+          <div class="container">
+            <v-tabs fixed-tabs v-model="tab">
+              <v-tab key="ting">听写</v-tab>
+              <v-tab key="content">原文</v-tab>
+            </v-tabs>
+            <v-tabs-items v-model="tab" class="ma-5">
+              <v-tab-item key="ting">
+                <div class="container text-center">
+                  <v-btn>开始听写</v-btn>
+                </div>
+              </v-tab-item>
+              <v-tab-item key="content">
+                <div class="container">
+                  <p class="text-body-1">{{ ting.content }}</p>
+                </div>
+              </v-tab-item>
+            </v-tabs-items>
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -59,7 +83,8 @@ export default {
     return {
       loading: false,
       ting: null,
-      program: null
+      program: null,
+      tab: null
     }
   },
   created () {

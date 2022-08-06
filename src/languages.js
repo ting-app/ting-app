@@ -24,5 +24,15 @@ const Languages = [
     value: 6
   }
 ]
+const languageMap = new Map(
+  Languages.map(language => {
+    return [language.value, language]
+  })
+)
+
+function getLanguageByValue (value) {
+  return languageMap.get(value)
+}
 
 export default Languages
+export { getLanguageByValue }

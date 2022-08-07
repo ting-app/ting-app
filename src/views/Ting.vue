@@ -34,7 +34,7 @@
                     </v-form>
                     <div class="container">
                       <v-btn class="ma-2">提交</v-btn>
-                      <v-btn class="ma-2">取消</v-btn>
+                      <v-btn class="ma-2" @click="cancel">取消</v-btn>
                     </div>
                   </template>
                   <template v-else>
@@ -95,6 +95,12 @@ export default {
       }
 
       return breadcrumbs
+    }
+  },
+  methods: {
+    cancel () {
+      this.start = false
+      this.tingContent = ''
     }
   },
   data () {

@@ -139,14 +139,15 @@ export default {
       let promise = null
 
       if (this.reUploadFile) {
-        promise = axios.get('/blobs/sas')
+        promise = axios.get('/blobs/sas?permission=w')
           .then((response) => {
+            const containerUrl = response.containerUrl + '?' + response.sas
             const file = this.audioFile
             const fileName = randomFileName(file.name)
-            const blobServiceClient = new BlobServiceClient(response)
+            const blobServiceClient = new BlobServiceClient(containerUrl)
             const containerClient = blobServiceClient.getContainerClient('')
             const blockBlobClient = containerClient.getBlockBlobClient(fileName)
-            const fileUrl = response.substring(0, response.indexOf('?')) + '/' + fileName
+            const fileUrl = response.containerUrl + '/' + fileName
 
             return blockBlobClient.uploadData(file)
               .then((_) => fileUrl)

@@ -13,6 +13,9 @@
           </div>
           <hr>
           <div class="container">
+            <div class="container text-center">
+              <audio controls :src="ting.audioUrl"></audio>
+            </div>
             <v-tabs fixed-tabs v-model="tab">
               <v-tab key="ting">听写</v-tab>
               <v-tab key="content">原文</v-tab>

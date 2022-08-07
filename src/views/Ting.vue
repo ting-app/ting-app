@@ -3,7 +3,7 @@
     <Overlay :loading="loading"></Overlay>
     <Navigation></Navigation>
     <div class="container ma-10">
-      <v-row justify="center">
+      <v-row justify="center" v-if="ting">
         <v-col cols="6">
           <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
           <hr>
@@ -20,7 +20,23 @@
             <v-tabs-items v-model="tab" class="ma-5">
               <v-tab-item key="ting">
                 <div class="container text-center">
-                  <v-btn>开始听写</v-btn>
+                  <template v-if="start">
+                    <v-form>
+                      <v-textarea
+                        clearable
+                        clear-icon="mdi-close-circle"
+                        label="你的听写"
+                        v-model="tingContent"
+                      ></v-textarea>
+                    </v-form>
+                    <div class="container">
+                      <v-btn class="ma-2">提交</v-btn>
+                      <v-btn class="ma-2">取消</v-btn>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <v-btn @click="start = true">开始听写</v-btn>
+                  </template>
                 </div>
               </v-tab-item>
               <v-tab-item key="content">
@@ -71,8 +87,7 @@ export default {
 
         breadcrumbs.push({
           text: this.ting.title,
-          disabled: true,
-          href: 'a'
+          disabled: true
         })
       }
 
@@ -84,7 +99,9 @@ export default {
       loading: false,
       ting: null,
       program: null,
-      tab: null
+      tab: null,
+      start: false,
+      tingContent: ''
     }
   },
   created () {

@@ -5,16 +5,8 @@
     <div class="container ma-10">
       <v-row justify="center">
         <v-col cols="6">
-          <v-card v-if="program">
-            <v-card-text>
-              <p class="text-h4 text--primary">
-                {{ program.title }}
-              </p>
-              <div class="text--primary">
-                {{ program.description }}
-              </div>
-            </v-card-text>
-          </v-card>
+          <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
+          <hr>
         </v-col>
       </v-row>
       <v-row v-for="ting in tings" :key="ting.id" justify="center">
@@ -42,6 +34,26 @@ export default {
   components: {
     Overlay,
     Navigation
+  },
+  computed: {
+    breadcrumbs () {
+      const breadcrumbs = []
+
+      if (this.program) {
+        breadcrumbs.push({
+          text: '首页',
+          disabled: false,
+          href: '/#/'
+        })
+
+        breadcrumbs.push({
+          text: this.program.title,
+          disabled: true
+        })
+      }
+
+      return breadcrumbs
+    }
   },
   data () {
     return {

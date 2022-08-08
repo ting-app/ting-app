@@ -14,7 +14,14 @@
           <hr>
           <div class="container">
             <div class="container text-center">
-              <audio controls :src="ting.audioUrl"></audio>
+              <Player theme="light">
+                <Audio>
+                  <source
+                    :data-src="ting.audioUrl"
+                  />
+                </Audio>
+                <DefaultUi />
+              </Player>
             </div>
             <v-tabs fixed-tabs v-model="tab">
               <v-tab key="ting">听写</v-tab>
@@ -33,7 +40,7 @@
                       ></v-textarea>
                     </v-form>
                     <div class="container">
-                      <v-btn class="ma-2">提交</v-btn>
+                      <v-btn class="ma-2" @click="check">提交</v-btn>
                       <v-btn class="ma-2" @click="cancel">取消</v-btn>
                     </div>
                   </template>
@@ -58,14 +65,19 @@
 <script>
 import Navigation from '@/components/Navigation.vue'
 import Overlay from '@/components/Overlay.vue'
+import { Player, Audio, DefaultUi } from '@vime/vue'
 import axios from '@/axios'
 import { getLanguageByValue } from '@/languages'
+import * as Diff from 'diff'
 
 export default {
   name: 'Ting',
   components: {
     Overlay,
-    Navigation
+    Navigation,
+    Player,
+    Audio,
+    DefaultUi
   },
   computed: {
     breadcrumbs () {
@@ -98,6 +110,11 @@ export default {
     }
   },
   methods: {
+    check () {
+      const diff = Diff.diffChars(this.ting.content, this.tingContent)
+
+      console.log(diff)
+    },
     cancel () {
       this.start = false
       this.tingContent = ''

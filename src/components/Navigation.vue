@@ -48,6 +48,10 @@
             >
               <v-list-item-title>我的节目</v-list-item-title>
             </v-list-item>
+            <v-list-item class="pointer"
+            >
+              <v-list-item-title>设置</v-list-item-title>
+            </v-list-item>
             <v-list-item class="pointer" @click="signOut"
             >
               <v-list-item-title>退出</v-list-item-title>

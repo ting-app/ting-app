@@ -29,7 +29,7 @@
             </v-tabs>
             <v-tabs-items v-model="tab" class="ma-5">
               <v-tab-item key="ting">
-                <div class="container text-center">
+                <div class="container">
                   <template v-if="start">
                     <v-form>
                       <v-textarea
@@ -39,13 +39,20 @@
                         v-model="tingContent"
                       ></v-textarea>
                     </v-form>
-                    <div class="container">
+                    <div class="container text-center">
                       <v-btn class="ma-2" @click="check">提交</v-btn>
                       <v-btn class="ma-2" @click="cancel">取消</v-btn>
                     </div>
                   </template>
+                  <template v-else-if="finished">
+                    <div class="diff">
+                      <p class="text-body-1" v-html="diff"></p>
+                    </div>
+                  </template>
                   <template v-else>
-                    <v-btn @click="start = true">开始听写</v-btn>
+                    <div class="text-center">
+                      <v-btn @click="start = true">开始听写</v-btn>
+                    </div>
                   </template>
                 </div>
               </v-tab-item>
@@ -107,17 +114,24 @@ export default {
       }
 
       return breadcrumbs
-    }
-  },
-  methods: {
-    check () {
-      const diff = Diff.diffChars(this.ting.content, this.tingContent)
-
-      console.log(diff)
     },
-    cancel () {
-      this.start = false
-      this.tingContent = ''
+    diff () {
+      const diffs = Diff.diffChars(this.ting.content, this.tingContent)
+      const result = diffs.map(diff => {
+        const value = diff.value
+
+        if (!diff.added && !diff.removed) {
+          return value
+        } else if (diff.added) {
+          return `<span class="diff-added">${value}</span>`
+        } else if (diff.removed) {
+          return `<span class="diff-removed">${value}</span>`
+        }
+
+        return value
+      })
+
+      return result.join('')
     }
   },
   data () {
@@ -127,7 +141,18 @@ export default {
       program: null,
       tab: null,
       start: false,
+      finished: false,
       tingContent: ''
+    }
+  },
+  methods: {
+    check () {
+      this.start = false
+      this.finished = true
+    },
+    cancel () {
+      this.start = false
+      this.tingContent = ''
     }
   },
   created () {
@@ -155,3 +180,14 @@ export default {
   }
 }
 </script>
+
+<style>
+.diff-added {
+  color: green;
+}
+
+.diff-removed {
+  color: red;
+  text-decoration: line-through;
+}
+</style>

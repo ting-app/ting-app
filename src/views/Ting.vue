@@ -37,7 +37,7 @@
                         clearable
                         clear-icon="mdi-close-circle"
                         label="你的听写"
-                        v-model="tingContent"
+                        v-model="tingPractice.content"
                       ></v-textarea>
                     </v-form>
                     <div class="container text-center">
@@ -130,11 +130,11 @@ export default {
       return breadcrumbs
     },
     duration () {
-      return dayjs.duration(this.seconds, 'seconds')
+      return dayjs.duration(this.tingPractice.timeCostInSeconds, 'seconds')
         .format('HH:mm:ss')
     },
     diff () {
-      const diffs = Diff.diffChars(this.ting.content, this.tingContent)
+      const diffs = Diff.diffChars(this.ting.content, this.tingPractice.content)
       const result = diffs.map(diff => {
         const value = diff.value
 
@@ -160,20 +160,24 @@ export default {
       tab: null,
       started: false,
       finished: false,
-      tingContent: '',
-      seconds: 0,
-      ticker: null
+      ticker: null,
+      tingPractice: {
+        tingId: 0,
+        content: '',
+        score: 0,
+        timeCostInSeconds: 0
+      }
     }
   },
   methods: {
     practice () {
       this.started = true
       this.finished = false
-      this.tingContent = ''
-      this.seconds = 0
+      this.tingPractice.content = ''
+      this.tingPractice.timeCostInSeconds = 0
 
       this.ticker = setInterval(() => {
-        this.seconds += 1
+        this.tingPractice.timeCostInSeconds += 1
       }, 1000)
     },
     check () {
@@ -185,8 +189,8 @@ export default {
     cancel () {
       this.started = false
       this.finished = false
-      this.tingContent = ''
-      this.seconds = 0
+      this.tingPractice.content = ''
+      this.tingPractice.timeCostInSeconds = 0
 
       clearInterval(this.ticker)
     }
@@ -199,6 +203,7 @@ export default {
     axios.get(`/tings/${id}`)
       .then((response) => {
         this.ting = response
+        this.tingPractice.tingId = response.id
 
         return axios.get(`/programs/${response.programId}`)
       })

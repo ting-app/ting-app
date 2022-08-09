@@ -88,6 +88,7 @@ import { getLanguageByValue } from '@/languages'
 import * as Diff from 'diff'
 import dayjs from 'dayjs'
 import dayjsDuration from 'dayjs/plugin/duration'
+import UnauthorizedError from '@/error/unauthorized-error'
 
 dayjs.extend(dayjsDuration)
 
@@ -199,6 +200,22 @@ export default {
       const score = 1 - diffCount / this.ting.content.length
 
       this.tingPractice.score = score
+
+      if (this.$store.state.me) {
+        this.loading = true
+
+        axios.post('/tingPractices', this.tingPractice)
+          .catch((error) => {
+            if (error instanceof UnauthorizedError) {
+              this.$router.push('/login')
+            } else {
+              this.$toast.error(error.message)
+            }
+          })
+          .finally(() => {
+            this.loading = false
+          })
+      }
     },
     cancel () {
       this.started = false

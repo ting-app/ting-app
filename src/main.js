@@ -35,6 +35,9 @@ try {
       })
       .catch((error) => {
         console.error(error)
+
+        localStorage.removeItem('me')
+        store.commit('setMe', null)
       })
       .finally(() => {
         newVue()

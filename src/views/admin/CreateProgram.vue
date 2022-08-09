@@ -1,93 +1,97 @@
 <template>
   <div class="container">
     <Navigation></Navigation>
-    <v-stepper v-model="step" class="step-container">
-      <v-stepper-header>
-        <v-stepper-step
-          :complete="step > 1"
-          step="1"
-        >
-          创建节目
-        </v-stepper-step>
-        <v-divider></v-divider>
-        <v-stepper-step
-          :complete="step > 2"
-          step="2"
-        >
-          创建听写
-        </v-stepper-step>
-      </v-stepper-header>
-      <v-stepper-items>
-        <v-stepper-content step="1">
-          <v-row justify="center" class="program-container">
-            <v-col cols="4">
-              <v-form
-                ref="form"
-                v-model="valid"
-                lazy-validation
-              >
-                <v-text-field
-                  v-model="title"
-                  :counter="100"
-                  :rules="titleRules"
-                  label="标题*"
-                  required
-                ></v-text-field>
-                <v-select
-                :items="languages"
-                  label="语言*"
-                  v-model="language"
-                ></v-select>
-                <v-textarea
-                  clearable
-                  clear-icon="mdi-close-circle"
-                  label="描述*"
-                  v-model="description"
-                  :counter="200"
-                  :rules="descriptionRules"
-                ></v-textarea>
-                <div class="text-center">
-                  <v-btn
-                    :disabled="!valid || loading"
-                    :loading="loading"
-                    class="mr-4"
-                    @click="createProgram"
+    <v-row justify="center">
+      <v-col cols="9">
+        <v-stepper v-model="step" class="step-container">
+          <v-stepper-header>
+            <v-stepper-step
+              :complete="step > 1"
+              step="1"
+            >
+              创建节目
+            </v-stepper-step>
+            <v-divider></v-divider>
+            <v-stepper-step
+              :complete="step > 2"
+              step="2"
+            >
+              创建听写
+            </v-stepper-step>
+          </v-stepper-header>
+          <v-stepper-items>
+            <v-stepper-content step="1">
+              <v-row justify="center" class="program-container">
+                <v-col cols="6">
+                  <v-form
+                    ref="form"
+                    v-model="valid"
+                    lazy-validation
                   >
-                    创建
-                  </v-btn>
-                  <v-btn
-                    :disabled="loading"
-                    class="mr-4"
-                    @click="goBack"
-                  >
-                    返回
-                  </v-btn>
-                </div>
-              </v-form>
-            </v-col>
-          </v-row>
-        </v-stepper-content>
-        <v-stepper-content step="2">
-          <v-row justify="center" class="program-container">
-            <v-col cols="4">
-              <div class="text-center">
-                <v-btn class="ma-2" @click="createTing">
-                  添加听写
-                  <v-icon
-                    right
-                    dark
-                  >
-                    mdi-plus
-                  </v-icon>
-                </v-btn>
-                <v-btn class="ma-2" @click="complete">完成</v-btn>
-              </div>
-            </v-col>
-          </v-row>
-          <TingList></TingList>
-        </v-stepper-content>
-      </v-stepper-items>
-    </v-stepper>
+                    <v-text-field
+                      v-model="title"
+                      :counter="100"
+                      :rules="titleRules"
+                      label="标题*"
+                      required
+                    ></v-text-field>
+                    <v-select
+                      :items="languages"
+                      label="语言*"
+                      v-model="language"
+                    ></v-select>
+                    <v-textarea
+                      clearable
+                      clear-icon="mdi-close-circle"
+                      label="描述*"
+                      v-model="description"
+                      :counter="200"
+                      :rules="descriptionRules"
+                    ></v-textarea>
+                    <div class="text-center">
+                      <v-btn
+                        :disabled="!valid || loading"
+                        :loading="loading"
+                        class="mr-4"
+                        @click="createProgram"
+                      >
+                        创建
+                      </v-btn>
+                      <v-btn
+                        :disabled="loading"
+                        class="mr-4"
+                        @click="goBack"
+                      >
+                        返回
+                      </v-btn>
+                    </div>
+                  </v-form>
+                </v-col>
+              </v-row>
+            </v-stepper-content>
+            <v-stepper-content step="2">
+              <v-row justify="center" class="program-container">
+                <v-col cols="4">
+                  <div class="text-center">
+                    <v-btn class="ma-2" @click="createTing">
+                      添加听写
+                      <v-icon
+                        right
+                        dark
+                      >
+                        mdi-plus
+                      </v-icon>
+                    </v-btn>
+                    <v-btn class="ma-2" @click="complete">完成</v-btn>
+                  </div>
+                </v-col>
+              </v-row>
+              <TingList></TingList>
+            </v-stepper-content>
+          </v-stepper-items>
+        </v-stepper>
+      </v-col>
+    </v-row>
     <CreateTing></CreateTing>
   </div>
 </template>

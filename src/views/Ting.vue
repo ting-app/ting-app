@@ -52,7 +52,7 @@
                     <div class="my-10">
                       <v-row>
                         <v-col cols="6">用时：{{ duration }}</v-col>
-                        <v-col cols="6">正确率：100%</v-col>
+                        <v-col cols="6">正确率：{{ (tingPractice.score * 100).toFixed(2) }}%</v-col>
                       </v-row>
                     </div>
                     <div class="container text-center">
@@ -185,6 +185,20 @@ export default {
       this.finished = true
 
       clearInterval(this.ticker)
+
+      const diffs = Diff.diffChars(this.ting.content, this.tingPractice.content)
+      const diffCount = diffs.map(diff => {
+        if (!diff.added && !diff.removed) {
+          return 0
+        }
+
+        return diff.value.length
+      }).reduce((a, b) => {
+        return a + b
+      }, 0)
+      const score = 1 - diffCount / this.ting.content.length
+
+      this.tingPractice.score = score
     },
     cancel () {
       this.started = false

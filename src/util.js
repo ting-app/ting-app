@@ -1,4 +1,4 @@
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 
 function randomString () {
   return (Math.random() + 1).toString(36).substring(6)

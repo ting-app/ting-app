@@ -1,7 +1,7 @@
 <template>
   <div>
     <Overlay :loading="loading"></Overlay>
-    <v-simple-table v-if="tings.length > 0" class="ma-10">
+    <v-simple-table v-if="tings.length > 0" class="my-10">
       <template v-slot:default>
         <thead>
         <tr>

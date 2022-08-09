@@ -2,7 +2,7 @@
   <div class="container">
     <Overlay :loading="loading"></Overlay>
     <Navigation></Navigation>
-    <div class="container ma-10">
+    <div class="container my-10">
       <v-row justify="center" v-if="ting">
         <v-col cols="6">
           <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
@@ -27,10 +27,11 @@
               <v-tab key="ting">听写</v-tab>
               <v-tab key="content">原文</v-tab>
             </v-tabs>
-            <v-tabs-items v-model="tab" class="ma-5">
+            <v-tabs-items v-model="tab" class="my-5">
               <v-tab-item key="ting">
                 <div class="container">
-                  <template v-if="start">
+                  <template v-if="started">
+                    <p class="text-right">{{ duration }}</p>
                     <v-form>
                       <v-textarea
                         clearable
@@ -48,10 +49,19 @@
                     <div class="diff">
                       <p class="text-body-1" v-html="diff"></p>
                     </div>
+                    <div class="my-10">
+                      <v-row>
+                        <v-col cols="6">用时：{{ duration }}</v-col>
+                        <v-col cols="6">正确率：100%</v-col>
+                      </v-row>
+                    </div>
+                    <div class="container text-center">
+                      <v-btn @click="practice">再次听写</v-btn>
+                    </div>
                   </template>
                   <template v-else>
                     <div class="text-center">
-                      <v-btn @click="start = true">开始听写</v-btn>
+                      <v-btn @click="practice">开始听写</v-btn>
                     </div>
                   </template>
                 </div>
@@ -76,6 +86,10 @@ import { Player, Audio, DefaultUi } from '@vime/vue'
 import axios from '@/axios'
 import { getLanguageByValue } from '@/languages'
 import * as Diff from 'diff'
+import dayjs from 'dayjs'
+import dayjsDuration from 'dayjs/plugin/duration'
+
+dayjs.extend(dayjsDuration)
 
 export default {
   name: 'Ting',
@@ -115,6 +129,10 @@ export default {
 
       return breadcrumbs
     },
+    duration () {
+      return dayjs.duration(this.seconds, 'seconds')
+        .format('HH:mm:ss')
+    },
     diff () {
       const diffs = Diff.diffChars(this.ting.content, this.tingContent)
       const result = diffs.map(diff => {
@@ -140,19 +158,37 @@ export default {
       ting: null,
       program: null,
       tab: null,
-      start: false,
+      started: false,
       finished: false,
-      tingContent: ''
+      tingContent: '',
+      seconds: 0,
+      ticker: null
     }
   },
   methods: {
+    practice () {
+      this.started = true
+      this.finished = false
+      this.tingContent = ''
+      this.seconds = 0
+
+      this.ticker = setInterval(() => {
+        this.seconds += 1
+      }, 1000)
+    },
     check () {
-      this.start = false
+      this.started = false
       this.finished = true
+
+      clearInterval(this.ticker)
     },
     cancel () {
-      this.start = false
+      this.started = false
+      this.finished = false
       this.tingContent = ''
+      this.seconds = 0
+
+      clearInterval(this.ticker)
     }
   },
   created () {

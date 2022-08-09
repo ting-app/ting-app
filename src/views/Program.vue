@@ -2,7 +2,7 @@
   <div class="container">
     <Overlay :loading="loading"></Overlay>
     <Navigation></Navigation>
-    <div class="container ma-10">
+    <div class="container my-10">
       <v-row justify="center">
         <v-col cols="6">
           <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>

@@ -2,7 +2,7 @@
   <div class="container">
     <Overlay :loading="loading"></Overlay>
     <Navigation></Navigation>
-    <div class="container ma-10">
+    <div class="container my-10">
       <v-row v-for="program in programs" :key="program.id" justify="center">
         <v-col cols="6">
           <p>

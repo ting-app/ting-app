@@ -6,6 +6,7 @@ import Login from '../views/Login.vue'
 import CreateProgram from '../views/admin/CreateProgram.vue'
 import Program from '../views/Program.vue'
 import Ting from '../views/Ting.vue'
+import ProgramList from '../views/admin/ProgramList.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -30,6 +31,14 @@ const routes = [
     path: '/admin/createProgram',
     name: 'CreateProgram',
     component: CreateProgram,
+    meta: {
+      loginRequired: true
+    }
+  },
+  {
+    path: '/admin/programs',
+    name: 'ProgramList',
+    component: ProgramList,
     meta: {
       loginRequired: true
     }

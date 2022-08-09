@@ -84,7 +84,6 @@ import Navigation from '@/components/Navigation.vue'
 import Overlay from '@/components/Overlay.vue'
 import { Player, Audio, DefaultUi } from '@vime/vue'
 import axios from '@/axios'
-import { getLanguageByValue } from '@/languages'
 import * as Diff from 'diff'
 import dayjs from 'dayjs'
 import dayjsDuration from 'dayjs/plugin/duration'
@@ -106,15 +105,11 @@ export default {
       const breadcrumbs = []
 
       if (this.program && this.ting) {
-        const language = getLanguageByValue(this.program.language)
-
-        if (language) {
-          breadcrumbs.push({
-            text: language.text,
-            disabled: false,
-            href: `/#/?language=${this.program.language}`
-          })
-        }
+        breadcrumbs.push({
+          text: '首页',
+          disabled: false,
+          href: '/#/'
+        })
 
         breadcrumbs.push({
           text: this.program.title,

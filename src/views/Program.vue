@@ -76,7 +76,7 @@ export default {
       .then((response) => {
         this.program = response
 
-        return axios.get(`/programs/${id}/tings`)
+        return axios.get(`/tings?programId=${id}`)
       })
       .then((response) => {
         this.tings = response

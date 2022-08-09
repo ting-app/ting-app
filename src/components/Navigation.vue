@@ -44,9 +44,13 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item class="pointer"
+            <v-list-item class="pointer" @click="$router.push('/admin/programs')"
             >
               <v-list-item-title>我的节目</v-list-item-title>
+            </v-list-item>
+            <v-list-item class="pointer"
+            >
+              <v-list-item-title>我的听写</v-list-item-title>
             </v-list-item>
             <v-list-item class="pointer"
             >

@@ -67,6 +67,8 @@ import UpdateProgram from '@/components/UpdateProgram.vue'
 import axios from '@/axios'
 import { formatDateTime } from '@/util'
 import UnauthorizedError from '@/error/unauthorized-error'
+import eventBus from '@/event-bus'
+import EventTypes from '@/event-types'
 
 export default {
   name: 'ProgramList',
@@ -106,6 +108,14 @@ export default {
       return formatDateTime(dateTime)
     },
     updateProgram (program) {
+      eventBus.$emit(EventTypes.UPDATE_PROGRAM, program)
+    },
+    programUpdated (program) {
+      const index = this.programs.findIndex((it) => it.id === program.id)
+
+      if (index >= 0) {
+        this.$set(this.programs, index, program)
+      }
     },
     deleteProgram (i, id) {
       if (!window.confirm('确认删除？')) {
@@ -145,6 +155,8 @@ export default {
       .finally(() => {
         this.loading = false
       })
+
+    eventBus.$on(EventTypes.PROGRAM_UPDATED, this.programUpdated)
   }
 }
 </script>

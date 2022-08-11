@@ -46,18 +46,19 @@
             ></v-file-input>
           </v-form>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
+        <v-card-actions class="justify-center">
           <v-btn
             :disabled="!valid || loading"
             :loading="loading"
             @click="create"
+            class="ma-2"
           >
             添加
           </v-btn>
           <v-btn
             :disabled="loading"
             @click="close"
+            class="ma-2"
           >
             取消
           </v-btn>

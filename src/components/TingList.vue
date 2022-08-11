@@ -21,9 +21,6 @@
           <td class="text-center">{{ format(ting.createdAt) }}</td>
           <td class="text-center">{{ format(ting.updatedAt) }}</td>
           <td class="text-center">
-<!--            <v-btn class="ma-2" @click="updateTing(ting)">编辑</v-btn>-->
-<!--            <v-btn color="error" class="ma-2" @click="deleteTing(index, ting.id)">删除</v-btn>-->
-<!--            -->
             <v-menu offset-y>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -99,6 +96,10 @@ export default {
       }
     },
     deleteTing (i, id) {
+      if (!window.confirm('确认删除？')) {
+        return
+      }
+
       this.loading = true
 
       axios.delete(`/tings/${id}`)

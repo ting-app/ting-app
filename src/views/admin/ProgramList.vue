@@ -23,8 +23,28 @@
               <td class="text-center">{{ format(program.createdAt) }}</td>
               <td class="text-center">{{ format(program.updatedAt) }}</td>
               <td class="text-center">
-                <v-btn class="ma-2" @click="updateProgram(program)">编辑</v-btn>
-                <v-btn color="error" class="ma-2" @click="deleteProgram(index, program.id)">删除</v-btn>
+                <v-menu offset-y>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      icon
+                      plain
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <v-icon>mdi-cog</v-icon>
+                    </v-btn>
+                  </template>
+                  <v-list>
+                    <v-list-item class="pointer" @click="updateProgram(program)"
+                    >
+                      <v-list-item-title>编辑</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item class="pointer" @click="deleteProgram(index, program.id)"
+                    >
+                      <v-list-item-title>删除</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
               </td>
             </tr>
             </tbody>
@@ -40,6 +60,7 @@ import Navigation from '@/components/Navigation.vue'
 import Overlay from '@/components/Overlay.vue'
 import axios from '@/axios'
 import { formatDateTime } from '@/util'
+import UnauthorizedError from '@/error/unauthorized-error'
 
 export default {
   name: 'ProgramList',
@@ -80,6 +101,28 @@ export default {
     updateProgram (program) {
     },
     deleteProgram (i, id) {
+      if (!window.confirm('确认删除？')) {
+        return
+      }
+
+      this.loading = true
+
+      axios.delete(`/programs/${id}`)
+        .then((response) => {
+          this.$delete(this.programs, i)
+        })
+        .catch((error) => {
+          console.error(error)
+
+          if (error instanceof UnauthorizedError) {
+            this.$router.push('/login')
+          } else {
+            this.$toast.error(error.message)
+          }
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
   },
   created () {

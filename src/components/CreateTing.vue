@@ -72,7 +72,7 @@ import eventBus from '@/event-bus'
 import axios from '@/axios'
 import { BlobServiceClient } from '@azure/storage-blob'
 import UnauthorizedError from '@/error/unauthorized-error'
-import Messages from '@/messages'
+import EventTypes from '@/event-types'
 import { randomFileName } from '@/util'
 
 export default {
@@ -144,7 +144,7 @@ export default {
         .then((response) => {
           this.close()
 
-          eventBus.$emit(Messages.TING_CREATED, response)
+          eventBus.$emit(EventTypes.TING_CREATED, response)
         })
         .catch((error) => {
           console.error(error)
@@ -161,7 +161,7 @@ export default {
     }
   },
   created () {
-    eventBus.$on(Messages.CREATE_TING, (programId) => {
+    eventBus.$on(EventTypes.CREATE_TING, (programId) => {
       this.dialog = true
       this.programId = programId
     })

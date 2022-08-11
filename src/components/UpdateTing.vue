@@ -82,7 +82,7 @@ import eventBus from '@/event-bus'
 import axios from '@/axios'
 import { BlobServiceClient } from '@azure/storage-blob'
 import UnauthorizedError from '@/error/unauthorized-error'
-import Messages from '@/messages'
+import EventTypes from '@/event-types'
 import { randomFileName } from '@/util'
 
 export default {
@@ -171,7 +171,7 @@ export default {
       promise.then((response) => {
         this.close()
 
-        eventBus.$emit(Messages.TING_UPDATED, response)
+        eventBus.$emit(EventTypes.TING_UPDATED, response)
       })
         .catch((error) => {
           console.error(error)
@@ -188,7 +188,7 @@ export default {
     }
   },
   created () {
-    eventBus.$on(Messages.UPDATE_TING, (ting) => {
+    eventBus.$on(EventTypes.UPDATE_TING, (ting) => {
       this.dialog = true
       this.ting = {
         ...ting

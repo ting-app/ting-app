@@ -43,6 +43,10 @@
                     >
                       <v-list-item-title>删除</v-list-item-title>
                     </v-list-item>
+                    <v-list-item class="pointer"
+                    >
+                      <v-list-item-title>查看听写</v-list-item-title>
+                    </v-list-item>
                   </v-list>
                 </v-menu>
               </td>
@@ -52,12 +56,14 @@
         </v-simple-table>
       </v-col>
     </v-row>
+    <UpdateProgram></UpdateProgram>
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/Navigation.vue'
 import Overlay from '@/components/Overlay.vue'
+import UpdateProgram from '@/components/UpdateProgram.vue'
 import axios from '@/axios'
 import { formatDateTime } from '@/util'
 import UnauthorizedError from '@/error/unauthorized-error'
@@ -66,7 +72,8 @@ export default {
   name: 'ProgramList',
   components: {
     Overlay,
-    Navigation
+    Navigation,
+    UpdateProgram
   },
   computed: {
     me () {

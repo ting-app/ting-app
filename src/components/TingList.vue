@@ -54,7 +54,7 @@
 
 <script>
 import eventBus from '@/event-bus'
-import Messages from '@/messages'
+import EventTypes from '@/event-types'
 import axios from '@/axios'
 import UnauthorizedError from '@/error/unauthorized-error'
 import UpdateTing from '@/components/UpdateTing.vue'
@@ -86,7 +86,7 @@ export default {
       this.tings.push(ting)
     },
     updateTing (ting) {
-      eventBus.$emit(Messages.UPDATE_TING, ting)
+      eventBus.$emit(EventTypes.UPDATE_TING, ting)
     },
     tingUpdated (ting) {
       const index = this.tings.findIndex((it) => it.id === ting.id)
@@ -121,8 +121,8 @@ export default {
     }
   },
   created () {
-    eventBus.$on(Messages.TING_CREATED, this.tingCreated)
-    eventBus.$on(Messages.TING_UPDATED, this.tingUpdated)
+    eventBus.$on(EventTypes.TING_CREATED, this.tingCreated)
+    eventBus.$on(EventTypes.TING_UPDATED, this.tingUpdated)
   }
 }
 </script>

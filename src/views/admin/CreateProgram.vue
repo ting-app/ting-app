@@ -104,7 +104,7 @@ import axios from '@/axios'
 import UnauthorizedError from '@/error/unauthorized-error'
 import eventBus from '@/event-bus'
 import Languages from '@/languages'
-import Messages from '@/messages'
+import EventTypes from '@/event-types'
 
 export default {
   name: 'CreateProgram',
@@ -169,7 +169,7 @@ export default {
       this.$router.push('/')
     },
     createTing () {
-      eventBus.$emit(Messages.CREATE_TING, this.programId)
+      eventBus.$emit(EventTypes.CREATE_TING, this.programId)
     },
     complete () {
       this.$router.push(`/programs/${this.programId}`)

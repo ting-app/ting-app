@@ -41,7 +41,7 @@
                     >
                       <v-list-item-title>编辑</v-list-item-title>
                     </v-list-item>
-                    <v-list-item class="pointer" @click="deleteProgram(index, program.id)"
+                    <v-list-item class="pointer" @click="deleteProgram(index, program)"
                     >
                       <v-list-item-title>删除</v-list-item-title>
                     </v-list-item>
@@ -123,14 +123,14 @@ export default {
         this.$set(this.programs, index, program)
       }
     },
-    deleteProgram (i, id) {
-      if (!window.confirm('确认删除？')) {
+    deleteProgram (i, program) {
+      if (!window.confirm(`确认删除${program.title}？`)) {
         return
       }
 
       this.loading = true
 
-      axios.delete(`/programs/${id}`)
+      axios.delete(`/programs/${program.id}`)
         .then((response) => {
           this.$delete(this.programs, i)
         })

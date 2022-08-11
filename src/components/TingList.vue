@@ -18,8 +18,8 @@
           <td class="text-center">{{ ting.title }}</td>
           <td class="text-center">{{ ting.description }}</td>
           <td class="text-center">{{ fileName(ting.audioUrl) }}</td>
-          <td class="text-center">{{ format(ting.createdAt) }}</td>
-          <td class="text-center">{{ format(ting.updatedAt) }}</td>
+          <td class="text-center">{{ formatDateTime(ting.createdAt) }}</td>
+          <td class="text-center">{{ formatDateTime(ting.updatedAt) }}</td>
           <td class="text-center">
             <v-menu offset-y>
               <template v-slot:activator="{ on, attrs }">
@@ -74,7 +74,7 @@ export default {
     }
   },
   methods: {
-    format (dateTime) {
+    formatDateTime (dateTime) {
       return formatDateTime(dateTime)
     },
     fileName (audioUrl) {

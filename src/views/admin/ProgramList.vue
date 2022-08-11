@@ -11,6 +11,7 @@
             <tr>
               <th class="text-center">标题</th>
               <th class="text-center">描述</th>
+              <th class="text-center">语言</th>
               <th class="text-center">创建时间</th>
               <th class="text-center">更新时间</th>
               <th class="text-center">操作</th>
@@ -20,8 +21,9 @@
             <tr v-for="(program, index) in programs" :key="program.id">
               <td class="text-center">{{ program.title }}</td>
               <td class="text-center">{{ program.description }}</td>
-              <td class="text-center">{{ format(program.createdAt) }}</td>
-              <td class="text-center">{{ format(program.updatedAt) }}</td>
+              <td class="text-center">{{ formatLanguage(program.language) }}</td>
+              <td class="text-center">{{ formatDateTime(program.createdAt) }}</td>
+              <td class="text-center">{{ formatDateTime(program.updatedAt) }}</td>
               <td class="text-center">
                 <v-menu offset-y>
                   <template v-slot:activator="{ on, attrs }">
@@ -69,6 +71,7 @@ import { formatDateTime } from '@/util'
 import UnauthorizedError from '@/error/unauthorized-error'
 import eventBus from '@/event-bus'
 import EventTypes from '@/event-types'
+import { getLanguageByValue } from '@/languages'
 
 export default {
   name: 'ProgramList',
@@ -104,8 +107,11 @@ export default {
     }
   },
   methods: {
-    format (dateTime) {
+    formatDateTime (dateTime) {
       return formatDateTime(dateTime)
+    },
+    formatLanguage (language) {
+      return getLanguageByValue(language).text
     },
     updateProgram (program) {
       eventBus.$emit(EventTypes.UPDATE_PROGRAM, program)

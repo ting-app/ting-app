@@ -15,7 +15,7 @@
             <router-link :to="`/tings/${ting.id}`" class="text-h6">{{ ting.title }}</router-link>
           </p>
           <p class="text-body-1">{{ ting.description }}</p>
-          <p class="text-caption">创建时间：{{ format(ting.createdAt) }}</p>
+          <p class="text-caption">创建时间：{{ formatDateTime(ting.createdAt) }}</p>
           <hr>
         </v-col>
       </v-row>
@@ -63,7 +63,7 @@ export default {
     }
   },
   methods: {
-    format (dateTime) {
+    formatDateTime (dateTime) {
       return formatDateTime(dateTime)
     }
   },

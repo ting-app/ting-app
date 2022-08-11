@@ -9,7 +9,7 @@
             <router-link :to="`/programs/${program.id}`" class="text-h6">{{ program.title }}</router-link>
           </p>
           <p class="text-body-1">{{ program.description }}</p>
-          <p class="text-caption">创建时间：{{ format(program.createdAt) }}</p>
+          <p class="text-caption">创建时间：{{ formatDateTime(program.createdAt) }}</p>
           <hr>
         </v-col>
       </v-row>
@@ -36,7 +36,7 @@ export default {
     }
   },
   methods: {
-    format (dateTime) {
+    formatDateTime (dateTime) {
       return formatDateTime(dateTime)
     },
     getPrograms () {

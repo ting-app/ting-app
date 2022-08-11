@@ -64,6 +64,8 @@
 import eventBus from '@/event-bus'
 import EventTypes from '@/event-types'
 import Languages from '@/languages'
+import axios from '@/axios'
+import UnauthorizedError from '@/error/unauthorized-error'
 
 export default {
   name: 'UpdateProgram',
@@ -75,17 +77,45 @@ export default {
       loading: false,
       titleRules: [
         v => !!v || '标题不能为空',
-        v => v.length <= 100 || '标题不能超过100个字符'
+        v => (v && v.length <= 100) || '标题不能超过100个字符'
       ],
       descriptionRules: [
         v => !!v || '描述不能为空',
-        v => v.length <= 200 || '描述不能超过200个字符'
+        v => (v && v.length <= 200) || '描述不能超过200个字符'
       ],
       languages: Languages
     }
   },
   methods: {
     update () {
+      if (!this.$refs.form.validate()) {
+        return
+      }
+
+      this.loading = true
+
+      const program = {
+        ...this.program
+      }
+
+      axios.put(`/programs/${program.id}`, program)
+        .then((response) => {
+          this.close()
+
+          eventBus.$emit(EventTypes.PROGRAM_UPDATED, response)
+        })
+        .catch((error) => {
+          console.error(error)
+
+          if (error instanceof UnauthorizedError) {
+            this.$router.push('/login')
+          } else {
+            this.$toast.error(error.message)
+          }
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
     close () {
       this.$refs.form.reset()

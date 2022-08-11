@@ -21,8 +21,31 @@
           <td class="text-center">{{ format(ting.createdAt) }}</td>
           <td class="text-center">{{ format(ting.updatedAt) }}</td>
           <td class="text-center">
-            <v-btn class="ma-2" @click="updateTing(ting)">编辑</v-btn>
-            <v-btn color="error" class="ma-2" @click="deleteTing(index, ting.id)">删除</v-btn>
+<!--            <v-btn class="ma-2" @click="updateTing(ting)">编辑</v-btn>-->
+<!--            <v-btn color="error" class="ma-2" @click="deleteTing(index, ting.id)">删除</v-btn>-->
+<!--            -->
+            <v-menu offset-y>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  plain
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-icon>mdi-cog</v-icon>
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item class="pointer" @click="updateTing(ting)"
+                >
+                  <v-list-item-title>编辑</v-list-item-title>
+                </v-list-item>
+                <v-list-item class="pointer" @click="deleteTing(index, ting.id)"
+                >
+                  <v-list-item-title>删除</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
           </td>
         </tr>
         </tbody>

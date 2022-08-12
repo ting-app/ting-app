@@ -6,7 +6,7 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
-          <hr>
+          <v-divider></v-divider>
         </v-col>
       </v-row>
       <v-row v-for="ting in tings" :key="ting.id" justify="center">
@@ -16,7 +16,7 @@
           </p>
           <p class="text-body-1">{{ ting.description }}</p>
           <p class="text-caption">创建时间：{{ formatDateTime(ting.createdAt) }}</p>
-          <hr>
+          <v-divider></v-divider>
         </v-col>
       </v-row>
     </div>

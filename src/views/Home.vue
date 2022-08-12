@@ -10,7 +10,7 @@
           </p>
           <p class="text-body-1">{{ program.description }}</p>
           <p class="text-caption">创建时间：{{ formatDateTime(program.createdAt) }}</p>
-          <hr>
+          <v-divider></v-divider>
         </v-col>
       </v-row>
     </div>

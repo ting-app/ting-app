@@ -6,12 +6,12 @@
       <v-row justify="center" v-if="ting">
         <v-col cols="6">
           <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
-          <hr>
+          <v-divider></v-divider>
           <div class="container">
             <p class="text-h6">描述：</p>
             <p class="text-body-1">{{ ting.description }}</p>
           </div>
-          <hr>
+          <v-divider></v-divider>
           <div class="container">
             <div class="container text-center">
               <Player theme="light">

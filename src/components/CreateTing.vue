@@ -119,7 +119,7 @@ export default {
 
       const file = this.audioFile
 
-      axios.get('/azureBlobs/sas?permission=w')
+      axios.get('/azureBlobs/sas?permission=c')
         .then((response) => {
           const containerUrl = response.containerUrl + '?' + response.sas
           const fileName = randomFileName(file.name)

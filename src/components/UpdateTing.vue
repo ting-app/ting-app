@@ -140,7 +140,7 @@ export default {
       let promise = null
 
       if (this.reUploadFile) {
-        promise = axios.get('/azureBlobs/sas?permission=w')
+        promise = axios.get('/azureBlobs/sas?permission=c')
           .then((response) => {
             const containerUrl = response.containerUrl + '?' + response.sas
             const file = this.audioFile

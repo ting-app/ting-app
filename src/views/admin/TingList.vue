@@ -2,10 +2,10 @@
   <div class="container">
     <Navigation></Navigation>
     <Overlay :loading="loading"></Overlay>
-    <TingList></TingList>
     <v-row justify="center" v-if="!loading">
       <v-col cols="9" class="ma-12">
         <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
+        <TingList v-if="program"></TingList>
       </v-col>
     </v-row>
   </div>

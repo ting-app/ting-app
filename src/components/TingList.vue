@@ -123,6 +123,25 @@ export default {
   created () {
     eventBus.$on(EventTypes.TING_CREATED, this.tingCreated)
     eventBus.$on(EventTypes.TING_UPDATED, this.tingUpdated)
+
+    const programId = this.$route.params.programId
+
+    if (programId) {
+      this.loading = true
+
+      axios.get(`/tings?programId=${programId}`)
+        .then((response) => {
+          this.tings = response
+        })
+        .catch((error) => {
+          console.error(error)
+
+          this.$toast.error(error.message)
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    }
   }
 }
 </script>

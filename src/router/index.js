@@ -7,6 +7,7 @@ import CreateProgram from '../views/admin/CreateProgram.vue'
 import Program from '../views/Program.vue'
 import Ting from '../views/Ting.vue'
 import ProgramList from '../views/admin/ProgramList.vue'
+import TingList from '../views/admin/TingList.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -39,6 +40,14 @@ const routes = [
     path: '/admin/programs',
     name: 'ProgramList',
     component: ProgramList,
+    meta: {
+      loginRequired: true
+    }
+  },
+  {
+    path: '/admin/programs/:programId/tings',
+    name: 'TingList',
+    component: TingList,
     meta: {
       loginRequired: true
     }

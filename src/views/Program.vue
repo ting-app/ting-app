@@ -2,22 +2,27 @@
   <div class="container">
     <Overlay :loading="loading"></Overlay>
     <Navigation></Navigation>
-    <div class="container my-10">
+    <div class="container my-10" v-if="!loading">
       <v-row justify="center">
         <v-col cols="6">
           <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
           <v-divider></v-divider>
         </v-col>
       </v-row>
-      <v-row v-for="ting in tings" :key="ting.id" justify="center">
-        <v-col cols="6">
-          <p>
-            <router-link :to="`/tings/${ting.id}`" class="text-h6">{{ ting.title }}</router-link>
-          </p>
-          <p class="text-body-1">{{ ting.description }}</p>
-          <p class="text-caption">创建时间：{{ formatDateTime(ting.createdAt) }}</p>
-          <v-divider></v-divider>
-        </v-col>
+      <template v-if="tings.length > 0">
+        <v-row v-for="ting in tings" :key="ting.id" justify="center">
+          <v-col cols="6">
+            <p>
+              <router-link :to="`/tings/${ting.id}`" class="text-h6">{{ ting.title }}</router-link>
+            </p>
+            <p class="text-body-1">{{ ting.description }}</p>
+            <p class="text-caption">创建时间：{{ formatDateTime(ting.createdAt) }}</p>
+            <v-divider></v-divider>
+          </v-col>
+        </v-row>
+      </template>
+      <v-row justify="center" v-else>
+        <p class="text-body-1">暂无听力</p>
       </v-row>
     </div>
   </div>

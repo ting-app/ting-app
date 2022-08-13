@@ -109,9 +109,9 @@ import EventTypes from '@/event-types'
 export default {
   name: 'CreateProgram',
   components: {
-    TingList,
     Navigation,
-    CreateTing
+    CreateTing,
+    TingList
   },
   data () {
     return {

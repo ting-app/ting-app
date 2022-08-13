@@ -5,9 +5,21 @@
     <v-row justify="center" v-if="!loading">
       <v-col cols="9" class="ma-12">
         <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
+        <div class="text-center">
+          <v-btn class="ma-2" @click="createTing">
+            添加听写
+            <v-icon
+              right
+              dark
+            >
+              mdi-plus
+            </v-icon>
+          </v-btn>
+        </div>
         <TingList v-if="program"></TingList>
       </v-col>
     </v-row>
+    <CreateTing></CreateTing>
   </div>
 </template>
 
@@ -15,14 +27,18 @@
 import Navigation from '@/components/Navigation.vue'
 import Overlay from '@/components/Overlay.vue'
 import TingList from '@/components/TingList.vue'
+import CreateTing from '@/components/CreateTing.vue'
 import axios from '@/axios'
+import eventBus from '@/event-bus'
+import EventTypes from '@/event-types'
 
 export default {
   name: 'TingListAdmin',
   components: {
     Overlay,
     Navigation,
-    TingList
+    TingList,
+    CreateTing
   },
   computed: {
     breadcrumbs () {
@@ -52,6 +68,11 @@ export default {
     return {
       loading: false,
       program: null
+    }
+  },
+  methods: {
+    createTing () {
+      eventBus.$emit(EventTypes.CREATE_TING, this.program.id)
     }
   },
   created () {

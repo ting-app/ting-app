@@ -59,9 +59,21 @@ export default {
 
     this.loading = true
 
-    axios.get(`/programs/${programId}`)
-      .then((response) => {
-        this.program = response
+    Promise.all([
+      axios.get(`/programs/${programId}`),
+      axios.get('/users/me')
+    ])
+      .then((values) => {
+        const program = values[0]
+        const me = values[1]
+
+        if (me === null) {
+          this.$router.push('/login')
+        } else if (program.createdBy !== me.id) {
+          this.$toast.error('无权限访问')
+        } else {
+          this.program = program
+        }
       })
       .catch((error) => {
         console.error(error)

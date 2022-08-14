@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <v-app-bar
-      absolute
+      fixed
       color="white"
     >
       <v-col cols="2"></v-col>

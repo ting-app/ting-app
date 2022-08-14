@@ -8,10 +8,9 @@
           lazy-validation
         >
           <v-text-field
-            v-model="name"
-            :counter="20"
-            :rules="nameRules"
-            label="姓名*"
+            v-model="nameOrEmail"
+            :rules="nameOrEmailRules"
+            label="姓名或邮箱地址*"
             required
           ></v-text-field>
           <v-text-field
@@ -48,21 +47,18 @@
 import axios from '@/axios'
 
 export default {
-  name: 'Register',
+  name: 'Login',
   data () {
     return {
       valid: true,
       loading: false,
-      name: '',
+      nameOrEmail: '',
       password: '',
-      nameRules: [
-        v => !!v || '姓名不能为空',
-        v => v.length <= 20 || '姓名不能超过20个字符'
+      nameOrEmailRules: [
+        v => !!v || '姓名或邮箱地址不能为空'
       ],
       passwordRules: [
-        v => !!v || '密码不能为空',
-        v => v.length >= 6 || '密码不能少于6个字符',
-        v => v.length <= 20 || '密码不能超过20个字符'
+        v => !!v || '密码不能为空'
       ]
     }
   },
@@ -75,7 +71,7 @@ export default {
       this.loading = true
 
       const user = {
-        name: this.name,
+        nameOrEmail: this.nameOrEmail,
         password: this.password
       }
 

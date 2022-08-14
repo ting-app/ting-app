@@ -15,6 +15,12 @@
             required
           ></v-text-field>
           <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="邮箱*"
+            required
+          ></v-text-field>
+          <v-text-field
             v-model="password"
             :rules="passwordRules"
             label="密码*"
@@ -61,11 +67,16 @@ export default {
       valid: true,
       loading: false,
       name: '',
+      email: '',
       password: '',
       confirmPassword: '',
       nameRules: [
         v => !!v || '姓名不能为空',
         v => v.length <= 20 || '姓名不能超过20个字符'
+      ],
+      emailRules: [
+        v => !!v || '邮箱地址不能为空',
+        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || '邮箱地址不合法'
       ],
       passwordRules: [
         v => !!v || '密码不能为空',
@@ -88,6 +99,7 @@ export default {
 
       const user = {
         name: this.name,
+        email: this.email,
         password: this.password,
         confirmPassword: this.confirmPassword
       }

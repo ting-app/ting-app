@@ -52,7 +52,7 @@
             >
               <v-list-item-title>我的听写</v-list-item-title>
             </v-list-item>
-            <v-list-item class="pointer"
+            <v-list-item class="pointer" @click="$router.push('/admin/settings')"
             >
               <v-list-item-title>设置</v-list-item-title>
             </v-list-item>

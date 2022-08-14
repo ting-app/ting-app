@@ -2,6 +2,8 @@
   <div class="container">
     <v-row justify="center">
       <v-col cols="3">
+        <p class="text-h5 text-center">注册</p>
+        <v-divider></v-divider>
         <v-form
           ref="form"
           v-model="valid"

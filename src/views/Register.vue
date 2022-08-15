@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <v-row justify="center">
-      <v-col cols="3">
+      <v-col cols="3" v-if="!finished">
         <p class="text-h5 text-center">注册</p>
         <v-divider></v-divider>
         <v-form
@@ -55,6 +55,25 @@
           </div>
         </v-form>
       </v-col>
+      <v-col cols="3" v-else>
+        <p class="text-h5 text-center">注册确认</p>
+        <v-divider></v-divider>
+        <p class="text-body-1 text-center my-10">已发送注册确认邮件到您的邮箱中，请注意查收。</p>
+        <div class="text-center">
+          <v-btn
+            class="mr-4"
+            @click="$router.push('/login')"
+          >
+            登陆
+          </v-btn>
+          <v-btn
+            class="mr-4"
+            @click="goBack"
+          >
+            返回
+          </v-btn>
+        </div>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -88,7 +107,8 @@ export default {
       confirmPasswordRules: [
         v => !!v || '确认密码不能为空',
         v => v === this.password || '两次密码不一致'
-      ]
+      ],
+      finished: false
     }
   },
   methods: {
@@ -108,9 +128,7 @@ export default {
 
       axios.post('/users', user)
         .then((response) => {
-          localStorage.setItem('me', JSON.stringify(response))
-          this.$store.commit('setMe', response)
-          this.$router.push('/')
+          this.finished = true
         })
         .catch((error) => {
           console.error(error)

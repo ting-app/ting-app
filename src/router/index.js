@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
-import RegisterConfirm from '../views/RegisterConfirm.vue'
+import ConfirmRegistration from '../views/ConfirmRegistration.vue'
 import Login from '../views/Login.vue'
 import CreateProgram from '../views/admin/CreateProgram.vue'
 import Program from '../views/Program.vue'
@@ -26,9 +26,9 @@ const routes = [
     component: Register
   },
   {
-    path: '/registerConfirm',
-    name: 'RegisterConfirm',
-    component: RegisterConfirm
+    path: '/confirmRegistration',
+    name: 'ConfirmRegistration',
+    component: ConfirmRegistration
   },
   {
     path: '/login',

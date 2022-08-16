@@ -114,6 +114,10 @@ export default {
       this.$router.push('/')
     },
     verifyEmail () {
+      if (!this.$refs.form.validate()) {
+        return
+      }
+
       this.loading = true
 
       axios.post('/users/verifyEmail', {
@@ -121,7 +125,7 @@ export default {
         password: this.password
       })
         .then((_) => {
-          this.$toast.info('注册确认邮件已发送，请注意查收')
+          this.$toast.info('确认邮件已发送到注册时所填写的邮箱，请注意查收')
         })
         .catch((error) => {
           console.error(error)

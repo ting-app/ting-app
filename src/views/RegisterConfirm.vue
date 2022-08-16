@@ -23,7 +23,7 @@ export default {
 
     this.loading = true
 
-    axios.post(`/users/registerConfirm?key=${key}`)
+    axios.post(`/users/confirmRegistration?key=${key}`)
       .then((_) => {
         this.$toast.info('注册已确认，正在跳转登陆')
 

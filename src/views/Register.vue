@@ -58,7 +58,7 @@
       <v-col cols="3" v-else>
         <p class="text-h5 text-center">注册确认</p>
         <v-divider></v-divider>
-        <p class="text-body-1 text-center my-10">已发送注册确认邮件到您的邮箱中，请注意查收。</p>
+        <p class="text-body-1 text-center my-10">确认邮件已发送到注册时所填写的邮箱，请注意查收。</p>
         <div class="text-center">
           <v-btn
             class="mr-4"

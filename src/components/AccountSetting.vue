@@ -33,6 +33,7 @@
           :disabled="!valid || loading"
           :loading="loading"
           class="mr-4"
+          @click="changePassword"
         >
           提交
         </v-btn>
@@ -42,6 +43,9 @@
 </template>
 
 <script>
+import axios from '@/axios'
+import UnauthorizedError from '@/error/unauthorized-error'
+
 export default {
   name: 'AccountSetting',
   data () {
@@ -59,6 +63,36 @@ export default {
         v => v.length >= 6 || '密码不能少于6个字符',
         v => v.length <= 20 || '密码不能超过20个字符'
       ]
+    }
+  },
+  methods: {
+    changePassword () {
+      if (!this.$refs.form.validate()) {
+        return
+      }
+
+      this.loading = true
+
+      axios.post('/users/me/changePassword', {
+        oldPassword: this.oldPassword,
+        newPassword: this.newPassword,
+        confirmNewPassword: this.confirmNewPassword
+      })
+        .then((_) => {
+          this.$toast.info('密码修改成功')
+        })
+        .catch((error) => {
+          console.error(error)
+
+          if (error instanceof UnauthorizedError) {
+            this.$router.push('/login')
+          } else {
+            this.$toast.error(error.message)
+          }
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
   }
 }

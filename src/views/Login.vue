@@ -22,7 +22,19 @@
             type="password"
             required
           ></v-text-field>
-          <div class="text-center">
+          <div v-if="unverified">
+            <p>
+              未收到验证邮件？
+              <v-btn
+                :disabled="!valid || loading"
+                :loading="loading"
+                @click="verifyEmail"
+              >重新发送
+              </v-btn>
+            </p>
+            <v-divider></v-divider>
+          </div>
+          <div class="container text-center">
             <v-btn
               :disabled="!valid || loading"
               :loading="loading"
@@ -47,6 +59,7 @@
 
 <script>
 import axios from '@/axios'
+import UnverifiedError from '@/error/unverified-error'
 
 export default {
   name: 'Login',
@@ -61,7 +74,8 @@ export default {
       ],
       passwordRules: [
         v => !!v || '密码不能为空'
-      ]
+      ],
+      unverified: false
     }
   },
   methods: {
@@ -87,6 +101,10 @@ export default {
           console.error(error)
 
           this.$toast.error(error.message)
+
+          if (error instanceof UnverifiedError) {
+            this.unverified = true
+          }
         })
         .finally(() => {
           this.loading = false
@@ -94,6 +112,25 @@ export default {
     },
     goBack () {
       this.$router.push('/')
+    },
+    verifyEmail () {
+      this.loading = true
+
+      axios.post('/users/verifyEmail', {
+        nameOrEmail: this.nameOrEmail,
+        password: this.password
+      })
+        .then((_) => {
+          this.$toast.info('注册确认邮件已发送，请注意查收')
+        })
+        .catch((error) => {
+          console.error(error)
+
+          this.$toast.error(error.message)
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
   }
 }

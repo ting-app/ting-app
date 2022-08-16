@@ -36,7 +36,7 @@
             type="password"
             required
           ></v-text-field>
-          <div class="text-center">
+          <div class="container text-center">
             <v-btn
               :disabled="!valid || loading"
               :loading="loading"

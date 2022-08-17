@@ -16,25 +16,28 @@
           </v-chip>
         </v-col>
       </v-row>
-      <template v-if="programs.length === 0">
-        <v-row justify="center">
-          <v-col cols="6">
-            <p class="text-body-1 text-center">暂无节目</p>
-          </v-col>
-        </v-row>
-      </template>
-      <template v-else>
-        <v-row v-for="program in programs" :key="program.id" justify="center">
-          <v-col cols="6">
-            <p>
-              <router-link :to="`/programs/${program.id}`" class="text-h6">{{ program.title }}</router-link>
-            </p>
-            <p class="text-body-1">{{ program.description }}</p>
-            <p class="text-caption">创建时间：{{ formatDateTime(program.createdAt) }}</p>
-            <v-divider></v-divider>
-          </v-col>
-        </v-row>
-      </template>
+      <div v-if="loaded">
+        <div v-if="programs.length === 0">
+          <v-row justify="center">
+            <v-col cols="6">
+              <p class="text-body-1 text-center">暂无节目</p>
+            </v-col>
+          </v-row>
+        </div>
+        <div v-else>
+          <v-row v-for="program in programs" :key="program.id" justify="center">
+            <v-col cols="6">
+              <p>
+                <router-link :to="`/programs/${program.id}`" class="text-h6">{{ program.title }}</router-link>
+              </p>
+              <p class="text-body-1">{{ program.description }}</p>
+              <p class="text-caption">创建时间：{{ formatDateTime(program.createdAt) }}</p>
+              <v-divider></v-divider>
+            </v-col>
+          </v-row>
+          <v-row v-intersect="onIntersect"></v-row>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -55,31 +58,48 @@ export default {
   data () {
     return {
       loading: false,
+      loaded: false,
       programs: [],
       languages: [{
         text: '全部',
         value: 0
       }].concat(Languages),
-      selectedLanguage: 0
+      selectedLanguage: 0,
+      page: 1,
+      pageSize: 5
     }
   },
   methods: {
     formatDateTime (dateTime) {
       return formatDateTime(dateTime)
     },
-    getPrograms () {
+    getPrograms (page, language) {
+      const languageChanged = language !== this.selectedLanguage
+
       this.loading = true
+      this.page = page
+      this.selectedLanguage = language
 
       let url = '/programs'
-      const language = this.selectedLanguage
+      const pageQuery = `page=${this.page}&pageSize=${this.pageSize}`
 
-      if (language) {
-        url += `?language=${language}`
+      if (language > 0) {
+        url += `?language=${language}&${pageQuery}`
+      } else {
+        url += `?${pageQuery}`
       }
 
       axios.get(url)
         .then((response) => {
-          this.programs = response
+          this.loaded = true
+
+          if (languageChanged) {
+            this.programs = response
+          } else {
+            response.forEach((program) => {
+              this.programs.push(program)
+            })
+          }
         })
         .catch((error) => {
           console.error(error)
@@ -91,12 +111,21 @@ export default {
         })
     },
     selectLanguage (language) {
-      this.selectedLanguage = language
-      this.getPrograms()
+      const page = 1
+
+      this.getPrograms(page, language)
+    },
+    onIntersect (entries, observer, intersecting) {
+      const page = this.page + 1
+
+      this.getPrograms(page, this.selectedLanguage)
     }
   },
   created () {
-    this.getPrograms()
+    const page = 1
+    const language = 0
+
+    this.getPrograms(page, language)
   }
 }
 </script>

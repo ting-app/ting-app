@@ -36,6 +36,16 @@ const routes = [
     component: Login
   },
   {
+    path: '/programs/:id',
+    name: 'Program',
+    component: Program
+  },
+  {
+    path: '/tings/:id',
+    name: 'Ting',
+    component: Ting
+  },
+  {
     path: '/admin/createProgram',
     name: 'CreateProgram',
     component: CreateProgram,
@@ -66,16 +76,6 @@ const routes = [
     meta: {
       loginRequired: true
     }
-  },
-  {
-    path: '/programs/:id',
-    name: 'Program',
-    component: Program
-  },
-  {
-    path: '/tings/:id',
-    name: 'Ting',
-    component: Ting
   }
 ]
 

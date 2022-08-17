@@ -123,6 +123,7 @@ export default {
 .pointer {
   cursor: pointer;
 }
+
 .navigation-tab {
   margin: 12px;
 }

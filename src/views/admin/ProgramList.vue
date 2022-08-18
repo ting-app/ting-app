@@ -47,7 +47,7 @@
                     </v-list-item>
                     <v-list-item class="pointer" @click="$router.push(`/admin/programs/${program.id}/tings`)"
                     >
-                      <v-list-item-title>查看听写</v-list-item-title>
+                      <v-list-item-title>查看听力</v-list-item-title>
                     </v-list-item>
                   </v-list>
                 </v-menu>

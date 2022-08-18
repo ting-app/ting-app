@@ -7,7 +7,7 @@
         <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
         <div class="text-center">
           <v-btn class="ma-2" @click="createTing">
-            添加听写
+            添加听力
             <v-icon
               right
               dark

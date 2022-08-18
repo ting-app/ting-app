@@ -7,7 +7,7 @@
     >
       <v-card>
         <v-card-title>
-          <span class="text-h5">添加听写</span>
+          <span class="text-h5">添加听力</span>
         </v-card-title>
         <v-card-text>
           <v-form

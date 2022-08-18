@@ -7,7 +7,7 @@
     >
       <v-card>
         <v-card-title>
-          <span class="text-h5">更新听写</span>
+          <span class="text-h5">更新听力</span>
         </v-card-title>
         <v-card-text>
           <v-form

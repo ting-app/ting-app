@@ -85,11 +85,8 @@ import Overlay from '@/components/Overlay.vue'
 import { Player, Audio, DefaultUi } from '@vime/vue'
 import axios from '@/axios'
 import * as Diff from 'diff'
-import dayjs from 'dayjs'
-import dayjsDuration from 'dayjs/plugin/duration'
+import dayjs from '@/dayjs'
 import UnauthorizedError from '@/error/unauthorized-error'
-
-dayjs.extend(dayjsDuration)
 
 export default {
   name: 'Ting',
@@ -194,7 +191,7 @@ export default {
       }, 0)
       const score = 1 - diffCount / this.ting.content.length
 
-      this.tingPractice.score = score
+      this.tingPractice.score = Math.max(0, score)
 
       if (this.$store.state.me) {
         this.loading = true

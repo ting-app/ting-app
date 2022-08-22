@@ -47,7 +47,13 @@
                   </template>
                   <template v-else-if="finished">
                     <div class="diff">
-                      <p class="text-body-1" v-html="diff"></p>
+                      <p class="text-body-1">
+                        <span v-for="(diff, index) in diffs" :key="index">
+                          <span v-if="!diff.added && !diff.removed">{{ diff.value }}</span>
+                          <span v-else-if="diff.added" class="diff-added">{{ diff.value }}</span>
+                          <span v-else-if="diff.removed" class="diff-removed">{{ diff.value }}</span>
+                        </span>
+                      </p>
                     </div>
                     <div class="my-10">
                       <v-row>
@@ -126,23 +132,8 @@ export default {
       return dayjs.duration(this.tingPractice.timeCostInSeconds, 'seconds')
         .format('HH:mm:ss')
     },
-    diff () {
-      const diffs = Diff.diffChars(this.ting.content, this.tingPractice.content)
-      const result = diffs.map(diff => {
-        const value = diff.value
-
-        if (!diff.added && !diff.removed) {
-          return value
-        } else if (diff.added) {
-          return `<span class="diff-added">${value}</span>`
-        } else if (diff.removed) {
-          return `<span class="diff-removed">${value}</span>`
-        }
-
-        return value
-      })
-
-      return result.join('')
+    diffs () {
+      return Diff.diffChars(this.ting.content, this.tingPractice.content)
     }
   },
   data () {

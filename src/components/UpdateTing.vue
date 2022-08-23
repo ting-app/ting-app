@@ -48,10 +48,12 @@
               v-model="audioFile"
               :rules="audioFileRules"
               label="听力文件（mp3 格式）*"
+              :show-size="true"
               v-if="reUploadFile"
             >
               <template v-slot:append-outer>
-                <v-btn @click="reUploadFile = false">取消上传</v-btn>
+                <span v-if="loading">{{ uploadProgress }}%</span>
+                <v-btn v-if="!loading" @click="reUploadFile = false">取消上传</v-btn>
               </template>
             </v-file-input>
           </v-form>
@@ -97,6 +99,15 @@ export default {
       const indexOfSlash = this.ting.audioUrl.lastIndexOf('/')
 
       return this.ting.audioUrl.substring(indexOfSlash + 1)
+    },
+    uploadProgress () {
+      if (!this.audioFile) {
+        return 0
+      }
+
+      const size = this.audioFile.size
+
+      return (this.uploadedBytes / size * 100).toFixed(2)
     }
   },
   data () {
@@ -121,7 +132,8 @@ export default {
         v => !!v || '听力文件不能为空'
       ],
       ting: null,
-      reUploadFile: false
+      reUploadFile: false,
+      uploadedBytes: 0
     }
   },
   methods: {
@@ -138,6 +150,7 @@ export default {
       this.loading = true
 
       let promise = null
+      const that = this
 
       if (this.reUploadFile) {
         promise = axios.get('/azureBlobs/sas?permission=c')
@@ -149,8 +162,13 @@ export default {
             const containerClient = blobServiceClient.getContainerClient('')
             const blockBlobClient = containerClient.getBlockBlobClient(fileName)
             const fileUrl = response.containerUrl + '/' + fileName
+            const option = {
+              onProgress (e) {
+                that.uploadedBytes = e.loadedBytes
+              }
+            }
 
-            return blockBlobClient.uploadData(file)
+            return blockBlobClient.uploadData(file, option)
               .then((_) => fileUrl)
           })
           .then((fileUrl) => {

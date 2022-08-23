@@ -43,7 +43,13 @@
               v-model="audioFile"
               :rules="audioFileRules"
               label="听力文件（mp3 格式）*"
-            ></v-file-input>
+              :show-size="true"
+              :loading="loading"
+            >
+              <template v-slot:append-outer v-if="loading">
+                <span>{{ uploadProgress }}%</span>
+              </template>
+            </v-file-input>
           </v-form>
         </v-card-text>
         <v-card-actions class="justify-center">
@@ -78,6 +84,17 @@ import { randomFileName } from '@/util'
 
 export default {
   name: 'CreateTing',
+  computed: {
+    uploadProgress () {
+      if (!this.audioFile) {
+        return 0
+      }
+
+      const size = this.audioFile.size
+
+      return (this.uploadedBytes / size * 100).toFixed(2)
+    }
+  },
   data () {
     return {
       programId: 0,
@@ -102,7 +119,8 @@ export default {
       audioFile: null,
       audioFileRules: [
         v => !!v || '听力文件不能为空'
-      ]
+      ],
+      uploadedBytes: 0
     }
   },
   methods: {
@@ -117,6 +135,7 @@ export default {
 
       this.loading = true
 
+      const that = this
       const file = this.audioFile
 
       axios.get('/azureBlobs/sas?permission=c')
@@ -127,8 +146,13 @@ export default {
           const containerClient = blobServiceClient.getContainerClient('')
           const blockBlobClient = containerClient.getBlockBlobClient(fileName)
           const fileUrl = response.containerUrl + '/' + fileName
+          const option = {
+            onProgress (e) {
+              that.uploadedBytes = e.loadedBytes
+            }
+          }
 
-          return blockBlobClient.uploadData(file)
+          return blockBlobClient.uploadData(file, option)
             .then((_) => fileUrl)
         })
         .then((fileUrl) => {

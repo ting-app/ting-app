@@ -44,7 +44,6 @@
               :rules="audioFileRules"
               label="听力文件（mp3 格式）*"
               :show-size="true"
-              :loading="loading"
             >
               <template v-slot:append-outer v-if="loading">
                 <span>{{ uploadProgress }}%</span>

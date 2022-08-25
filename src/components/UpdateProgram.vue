@@ -36,6 +36,10 @@
               :counter="200"
               :rules="descriptionRules"
             ></v-textarea>
+            <v-radio-group v-model="program.visible" row>
+              <v-radio :value="true" label="公开"></v-radio>
+              <v-radio :value="false" label="私有"></v-radio>
+            </v-radio-group>
           </v-form>
         </v-card-text>
         <v-card-actions class="justify-center">

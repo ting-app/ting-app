@@ -48,6 +48,10 @@
                       :counter="200"
                       :rules="descriptionRules"
                     ></v-textarea>
+                    <v-radio-group v-model="visible" row>
+                      <v-radio :value="true" label="公开"></v-radio>
+                      <v-radio :value="false" label="私有"></v-radio>
+                    </v-radio-group>
                     <div class="text-center">
                       <v-btn
                         :disabled="!valid || loading"
@@ -130,7 +134,8 @@ export default {
         v => v.length <= 200 || '描述不能超过200个字符'
       ],
       language: 1,
-      languages: Languages
+      languages: Languages,
+      visible: true
     }
   },
   methods: {
@@ -144,7 +149,8 @@ export default {
       const program = {
         title: this.title,
         language: this.language,
-        description: this.description
+        description: this.description,
+        visible: this.visible
       }
 
       axios.post('/programs', program)

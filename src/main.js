@@ -46,5 +46,7 @@ try {
     newVue()
   }
 } catch (error) {
+  console.error(error)
+
   newVue()
 }

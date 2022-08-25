@@ -15,9 +15,16 @@
           <div class="container">
             <div class="container text-center">
               <Player theme="light">
-                <Audio>
+                <Hls v-if="isHls(ting.audioUrl)" crossOrigin>
                   <source
                     :data-src="ting.audioUrl"
+                    type="application/x-mpegURL"
+                  />
+                </Hls>
+                <Audio v-else>
+                  <source
+                    :data-src="ting.audioUrl"
+                    type="video/mp4"
                   />
                 </Audio>
                 <DefaultUi />
@@ -88,7 +95,7 @@
 <script>
 import Navigation from '@/components/Navigation.vue'
 import Overlay from '@/components/Overlay.vue'
-import { Player, Audio, DefaultUi } from '@vime/vue'
+import { Player, Audio, Hls, DefaultUi } from '@vime/vue'
 import axios from '@/axios'
 import * as Diff from 'diff'
 import dayjs from '@/dayjs'
@@ -101,6 +108,7 @@ export default {
     Navigation,
     Player,
     Audio,
+    Hls,
     DefaultUi
   },
   computed: {
@@ -207,6 +215,9 @@ export default {
       this.tingPractice.timeCostInSeconds = 0
 
       clearInterval(this.ticker)
+    },
+    isHls (audioUrl) {
+      return audioUrl.indexOf('.m3u8') >= 0
     }
   },
   created () {

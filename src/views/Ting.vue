@@ -3,7 +3,7 @@
     <Overlay :loading="loading"></Overlay>
     <Navigation></Navigation>
     <div class="container my-10">
-      <v-row justify="center" v-if="ting">
+      <v-row justify="center" v-if="program && ting">
         <v-col cols="6">
           <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
           <v-divider></v-divider>

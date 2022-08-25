@@ -154,7 +154,7 @@ export default {
   created () {
     this.loading = true
 
-    axios.get(`/programs?createdBy=${this.me.id}`)
+    axios.get('/users/me/programs')
       .then((response) => {
         this.programs = response
       })

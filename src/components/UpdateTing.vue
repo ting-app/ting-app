@@ -52,7 +52,6 @@
               v-if="reUploadFile"
             >
               <template v-slot:append-outer>
-                <span v-if="loading">{{ uploadProgress }}%</span>
                 <v-btn v-if="!loading" @click="reUploadFile = false">取消上传</v-btn>
               </template>
             </v-file-input>
@@ -83,7 +82,6 @@
 <script>
 import eventBus from '@/event-bus'
 import axios from '@/axios'
-import { BlobServiceClient } from '@azure/storage-blob'
 import UnauthorizedError from '@/error/unauthorized-error'
 import EventTypes from '@/event-types'
 import { randomFileName } from '@/util'
@@ -99,15 +97,6 @@ export default {
       const indexOfSlash = this.ting.audioUrl.lastIndexOf('/')
 
       return this.ting.audioUrl.substring(indexOfSlash + 1)
-    },
-    uploadProgress () {
-      if (!this.audioFile) {
-        return 0
-      }
-
-      const size = this.audioFile.size
-
-      return (this.uploadedBytes / size * 100).toFixed(2)
     }
   },
   data () {
@@ -132,8 +121,7 @@ export default {
         v => !!v || '听力文件不能为空'
       ],
       ting: null,
-      reUploadFile: false,
-      uploadedBytes: 0
+      reUploadFile: false
     }
   },
   methods: {
@@ -150,26 +138,21 @@ export default {
       this.loading = true
 
       let promise = null
-      const that = this
 
       if (this.reUploadFile) {
-        promise = axios.get('/azureBlobs/sas?permission=c')
-          .then((response) => {
-            const containerUrl = response.containerUrl + '?' + response.sas
-            const file = this.audioFile
-            const fileName = randomFileName(file.name)
-            const blobServiceClient = new BlobServiceClient(containerUrl)
-            const containerClient = blobServiceClient.getContainerClient('')
-            const blockBlobClient = containerClient.getBlockBlobClient(fileName)
-            const fileUrl = response.containerUrl + '/' + fileName
-            const option = {
-              onProgress (e) {
-                that.uploadedBytes = e.loadedBytes
-              }
-            }
+        const file = this.audioFile
+        const fileName = randomFileName(file.name)
 
-            return blockBlobClient.uploadData(file, option)
-              .then((_) => fileUrl)
+        promise = axios.get(`/s3/presignedUrl?permission=c&fileName=${fileName}`)
+          .then((presignedUrl) => {
+            return axios.put(presignedUrl, file, {
+              withCredentials: false
+            })
+              .then((_) => {
+                const index = presignedUrl.lastIndexOf('?')
+
+                return presignedUrl.substring(0, index)
+              })
           })
           .then((fileUrl) => {
             const ting = {

@@ -45,9 +45,6 @@
               label="听力文件（mp3 格式）*"
               :show-size="true"
             >
-              <template v-slot:append-outer v-if="loading">
-                <span>{{ uploadProgress }}%</span>
-              </template>
             </v-file-input>
           </v-form>
         </v-card-text>
@@ -76,24 +73,12 @@
 <script>
 import eventBus from '@/event-bus'
 import axios from '@/axios'
-import { BlobServiceClient } from '@azure/storage-blob'
 import UnauthorizedError from '@/error/unauthorized-error'
 import EventTypes from '@/event-types'
 import { randomFileName } from '@/util'
 
 export default {
   name: 'CreateTing',
-  computed: {
-    uploadProgress () {
-      if (!this.audioFile) {
-        return 0
-      }
-
-      const size = this.audioFile.size
-
-      return (this.uploadedBytes / size * 100).toFixed(2)
-    }
-  },
   data () {
     return {
       programId: 0,
@@ -118,8 +103,7 @@ export default {
       audioFile: null,
       audioFileRules: [
         v => !!v || '听力文件不能为空'
-      ],
-      uploadedBytes: 0
+      ]
     }
   },
   methods: {
@@ -134,25 +118,19 @@ export default {
 
       this.loading = true
 
-      const that = this
       const file = this.audioFile
+      const fileName = randomFileName(file.name)
 
-      axios.get('/azureBlobs/sas?permission=c')
-        .then((response) => {
-          const containerUrl = response.containerUrl + '?' + response.sas
-          const fileName = randomFileName(file.name)
-          const blobServiceClient = new BlobServiceClient(containerUrl)
-          const containerClient = blobServiceClient.getContainerClient('')
-          const blockBlobClient = containerClient.getBlockBlobClient(fileName)
-          const fileUrl = response.containerUrl + '/' + fileName
-          const option = {
-            onProgress (e) {
-              that.uploadedBytes = e.loadedBytes
-            }
-          }
+      axios.get(`/s3/presignedUrl?permission=c&fileName=${fileName}`)
+        .then((presignedUrl) => {
+          return axios.put(presignedUrl, file, {
+            withCredentials: false
+          })
+            .then((_) => {
+              const index = presignedUrl.lastIndexOf('?')
 
-          return blockBlobClient.uploadData(file, option)
-            .then((_) => fileUrl)
+              return presignedUrl.substring(0, index)
+            })
         })
         .then((fileUrl) => {
           const ting = {

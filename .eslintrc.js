@@ -25,5 +25,5 @@ module.exports = {
       }
     }
   ],
-  "ignorePatterns": ["playerjs.js"]
+  ignorePatterns: ['playerjs.js']
 }

@@ -5,8 +5,6 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import Toast, { POSITION } from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
-import '@vime/core/themes/default.css'
-import '@vime/core/themes/light.css'
 import axios from './axios'
 
 Vue.config.productionTip = false

@@ -14,21 +14,7 @@
           <v-divider></v-divider>
           <div class="container">
             <div class="container text-center">
-              <Player theme="light">
-                <Hls v-if="isHls(ting.audioUrl)" crossOrigin>
-                  <source
-                    :data-src="ting.audioUrl"
-                    type="application/x-mpegURL"
-                  />
-                </Hls>
-                <Audio v-else>
-                  <source
-                    :data-src="ting.audioUrl"
-                    type="video/mp4"
-                  />
-                </Audio>
-                <DefaultUi />
-              </Player>
+              <div id="player"></div>
             </div>
             <v-tabs fixed-tabs v-model="tab">
               <v-tab key="ting">听写</v-tab>
@@ -93,9 +79,9 @@
 </template>
 
 <script>
+/* global Playerjs */
 import Navigation from '@/components/Navigation.vue'
 import Overlay from '@/components/Overlay.vue'
-import { Player, Audio, Hls, DefaultUi } from '@vime/vue'
 import axios from '@/axios'
 import * as Diff from 'diff'
 import dayjs from '@/dayjs'
@@ -105,11 +91,7 @@ export default {
   name: 'Ting',
   components: {
     Overlay,
-    Navigation,
-    Player,
-    Audio,
-    Hls,
-    DefaultUi
+    Navigation
   },
   computed: {
     breadcrumbs () {
@@ -158,7 +140,8 @@ export default {
         content: '',
         score: 0,
         timeCostInSeconds: 0
-      }
+      },
+      player: null
     }
   },
   methods: {
@@ -215,12 +198,9 @@ export default {
       this.tingPractice.timeCostInSeconds = 0
 
       clearInterval(this.ticker)
-    },
-    isHls (audioUrl) {
-      return audioUrl.indexOf('.m3u8') >= 0
     }
   },
-  created () {
+  mounted () {
     const id = this.$route.params.id
 
     this.loading = false
@@ -234,6 +214,12 @@ export default {
       })
       .then((response) => {
         this.program = response
+      })
+      .then(() => {
+        this.player = new Playerjs({
+          id: 'player',
+          file: this.ting.audioUrl
+        })
       })
       .catch((error) => {
         console.error(error)

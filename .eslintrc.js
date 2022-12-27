@@ -24,5 +24,6 @@ module.exports = {
         jest: true
       }
     }
-  ]
+  ],
+  "ignorePatterns": ["playerjs.js"]
 }

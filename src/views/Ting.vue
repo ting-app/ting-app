@@ -67,7 +67,7 @@
               </v-tab-item>
               <v-tab-item key="content">
                 <div class="container">
-                  <p class="text-body-1">{{ ting.content }}</p>
+                  <p class="text-body-1" v-for="line in ting.content.split('\n')" :key="line">{{ line }}</p>
                 </div>
               </v-tab-item>
             </v-tabs-items>

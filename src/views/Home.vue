@@ -48,6 +48,7 @@ import Overlay from '@/components/Overlay.vue'
 import axios from '@/axios'
 import { formatDateTime } from '@/util'
 import Languages from '@/languages'
+import Constant from '@/constant'
 
 export default {
   name: 'Home',
@@ -66,7 +67,7 @@ export default {
       }].concat(Languages),
       selectedLanguage: 0,
       page: 1,
-      pageSize: 10
+      pageSize: Constant.defaultPageSize
     }
   },
   methods: {

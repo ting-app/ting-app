@@ -38,6 +38,7 @@ import Navigation from '@/components/Navigation.vue'
 import Overlay from '@/components/Overlay.vue'
 import axios from '@/axios'
 import { formatDateTime } from '@/util'
+import Constant from '@/constant'
 
 export default {
   name: 'Program',
@@ -72,7 +73,7 @@ export default {
       program: null,
       tings: [],
       page: 1,
-      pageSize: 10
+      pageSize: Constant.defaultPageSize
     }
   },
   methods: {

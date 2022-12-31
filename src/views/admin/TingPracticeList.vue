@@ -42,6 +42,7 @@ import axios from '@/axios'
 import UnauthorizedError from '@/error/unauthorized-error'
 import { formatDateTime } from '@/util'
 import dayjs from '@/dayjs'
+import Constant from '@/constant'
 
 export default {
   name: 'TingPracticeList',
@@ -75,7 +76,7 @@ export default {
       loading: false,
       tingPractices: [],
       page: 1,
-      pageSize: 10
+      pageSize: Constant.defaultPageSize
     }
   },
   methods: {

@@ -66,7 +66,7 @@ export default {
       }].concat(Languages),
       selectedLanguage: 0,
       page: 1,
-      pageSize: 5
+      pageSize: 10
     }
   },
   methods: {

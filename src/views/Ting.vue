@@ -203,7 +203,7 @@ export default {
   mounted () {
     const id = this.$route.params.id
 
-    this.loading = false
+    this.loading = true
 
     axios.get(`/tings/${id}`)
       .then((response) => {

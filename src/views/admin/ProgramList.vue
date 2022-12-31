@@ -10,7 +10,6 @@
             <thead>
             <tr>
               <th class="text-center">标题</th>
-              <th class="text-center">描述</th>
               <th class="text-center">语言</th>
               <th class="text-center">是否公开</th>
               <th class="text-center">创建时间</th>
@@ -21,7 +20,6 @@
             <tbody>
             <tr v-for="(program, index) in programs" :key="program.id">
               <td class="text-center">{{ program.title }}</td>
-              <td class="text-center">{{ program.description }}</td>
               <td class="text-center">{{ formatLanguage(program.language) }}</td>
               <td class="text-center">{{ program.visible ? '是' : '否' }}</td>
               <td class="text-center">{{ formatDateTime(program.createdAt) }}</td>

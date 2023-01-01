@@ -101,7 +101,12 @@ export default {
       return audioUrl.substring(indexOfSlash + 1)
     },
     tingCreated (ting) {
-      this.tings.push(ting)
+      // Assume only one user will update ting list at the same time
+      this.totalCount += 1
+
+      const page = 1
+
+      this.getTings(page)
     },
     updateTing (ting) {
       eventBus.$emit(EventTypes.UPDATE_TING, ting)

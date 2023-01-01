@@ -87,7 +87,8 @@ export default {
       tings: [],
       page: 1,
       pageSize: Constant.defaultPageSize / 10,
-      totalCount: 0
+      totalCount: 0,
+      programId: 0
     }
   },
   methods: {
@@ -140,12 +141,10 @@ export default {
       this.getTings(page)
     },
     getTings (page) {
-      const programId = this.$route.params.programId
-
       this.loading = true
       this.page = page
 
-      axios.get(`/tings?programId=${programId}&page=${this.page}&pageSize=${this.pageSize}`)
+      axios.get(`/tings?programId=${this.programId}&page=${this.page}&pageSize=${this.pageSize}`)
         .then((response) => {
           this.tings = response
         })
@@ -163,9 +162,9 @@ export default {
     eventBus.$on(EventTypes.TING_CREATED, this.tingCreated)
     eventBus.$on(EventTypes.TING_UPDATED, this.tingUpdated)
 
-    const programId = this.$route.params.programId
+    this.programId = this.$route.params.programId
 
-    axios.get(`/tings:count?programId=${programId}`)
+    axios.get(`/tings:count?programId=${this.programId}`)
       .then((response) => {
         this.totalCount = response
       })

@@ -123,6 +123,18 @@ export default {
       axios.delete(`/tings/${ting.id}`)
         .then((response) => {
           this.$delete(this.tings, i)
+          this.totalCount -= 1
+
+          if (this.totalPages === 0) {
+            // No more data
+            return Promise.resolve()
+          } else if (this.page > this.totalPages) {
+            // Current page is the last page, and no more data
+            return this.getTings(this.page - 1)
+          } else {
+            // Current page is not the last page
+            return this.getTings(this.page)
+          }
         })
         .catch((error) => {
           console.error(error)

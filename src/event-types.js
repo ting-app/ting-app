@@ -4,7 +4,8 @@ const EventTypes = {
   UPDATE_TING: 'updateTing',
   TING_UPDATED: 'tingUpdated',
   UPDATE_PROGRAM: 'updateProgram',
-  PROGRAM_UPDATED: 'programUpdated'
+  PROGRAM_UPDATED: 'programUpdated',
+  PROGRAM_CREATED: 'programCreated'
 }
 
 export default EventTypes

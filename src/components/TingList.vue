@@ -86,7 +86,7 @@ export default {
       loading: false,
       tings: [],
       page: 1,
-      pageSize: Constant.defaultPageSize / 10,
+      pageSize: Constant.defaultPageSize,
       totalCount: 0,
       programId: 0
     }
@@ -173,13 +173,21 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    programCreated (programId) {
+      this.programId = programId
     }
   },
   created () {
     eventBus.$on(EventTypes.TING_CREATED, this.tingCreated)
     eventBus.$on(EventTypes.TING_UPDATED, this.tingUpdated)
+    eventBus.$on(EventTypes.PROGRAM_CREATED, this.programCreated)
 
     this.programId = this.$route.params.programId
+
+    if (!this.programId) {
+      return
+    }
 
     axios.get(`/tings:count?programId=${this.programId}`)
       .then((response) => {

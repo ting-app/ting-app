@@ -90,7 +90,9 @@
                   </div>
                 </v-col>
               </v-row>
-              <TingList></TingList>
+              <div class="mb-5">
+                <TingList></TingList>
+              </div>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
@@ -157,6 +159,8 @@ export default {
         .then((response) => {
           this.step = 2
           this.programId = response.id
+
+          eventBus.$emit(EventTypes.PROGRAM_CREATED, this.programId)
         })
         .catch((error) => {
           console.error(error)

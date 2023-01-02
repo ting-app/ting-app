@@ -68,7 +68,6 @@ import UnauthorizedError from '@/error/unauthorized-error'
 import UpdateTing from '@/components/UpdateTing.vue'
 import Overlay from '@/components/Overlay.vue'
 import { formatDateTime } from '@/util'
-import Constant from '@/constant'
 
 export default {
   name: 'TingList',
@@ -86,7 +85,7 @@ export default {
       loading: false,
       tings: [],
       page: 1,
-      pageSize: Constant.defaultPageSize,
+      pageSize: 10,
       totalCount: 0,
       programId: 0
     }

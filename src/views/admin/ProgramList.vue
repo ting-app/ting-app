@@ -3,7 +3,7 @@
     <Overlay :loading="loading"></Overlay>
     <Navigation></Navigation>
     <v-row justify="center" v-if="!loading">
-      <v-col cols="9" class="ma-12">
+      <v-col cols="10" class="ma-12">
         <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
         <v-simple-table v-if="programs.length > 0">
           <template v-slot:default>

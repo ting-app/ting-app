@@ -2,7 +2,7 @@
   <div class="container">
     <Navigation></Navigation>
     <v-row justify="center">
-      <v-col cols="9">
+      <v-col cols="10">
         <v-stepper v-model="step" class="step-container">
           <v-stepper-header>
             <v-stepper-step

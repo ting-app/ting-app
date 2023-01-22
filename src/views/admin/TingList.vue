@@ -3,7 +3,7 @@
     <Navigation></Navigation>
     <Overlay :loading="loading"></Overlay>
     <v-row justify="center" v-if="!loading">
-      <v-col cols="9" class="ma-12">
+      <v-col cols="10" class="ma-12">
         <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
         <div class="text-center">
           <v-btn class="ma-2" @click="createTing">

@@ -4,7 +4,7 @@
     <Navigation></Navigation>
     <div class="container my-10">
       <v-row justify="center">
-        <v-col cols="6">
+        <v-col cols="8">
           <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
           <v-divider></v-divider>
         </v-col>
@@ -17,7 +17,7 @@
         </div>
         <div v-else>
           <v-row v-for="ting in tings" :key="ting.id" justify="center">
-            <v-col cols="6">
+            <v-col cols="8">
               <p>
                 <router-link :to="`/tings/${ting.id}`" class="text-h6">{{ ting.title }}</router-link>
               </p>

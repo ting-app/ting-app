@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <v-row justify="center">
-      <v-col cols="3" v-if="!finished">
+      <v-col cols="4" v-if="!finished">
         <p class="text-h5 text-center">注册</p>
         <v-divider></v-divider>
         <v-form
@@ -55,7 +55,7 @@
           </div>
         </v-form>
       </v-col>
-      <v-col cols="3" v-else>
+      <v-col cols="4" v-else>
         <p class="text-h5 text-center">注册确认</p>
         <v-divider></v-divider>
         <p class="text-body-1 text-center my-10">确认邮件已发送到注册时所填写的邮箱，请注意查收。</p>

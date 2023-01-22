@@ -2,7 +2,7 @@
   <div class="container">
     <Navigation></Navigation>
     <v-row justify="center">
-      <v-col cols="6" class="ma-12">
+      <v-col cols="8" class="ma-12">
         <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
         <v-tabs vertical>
           <v-tab>

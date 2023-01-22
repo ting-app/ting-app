@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <v-row justify="center">
-      <v-col cols="3">
+      <v-col cols="4">
         <p class="text-h5 text-center">登陆</p>
         <v-divider></v-divider>
         <v-form

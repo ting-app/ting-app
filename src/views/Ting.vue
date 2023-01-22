@@ -4,7 +4,7 @@
     <Navigation></Navigation>
     <div class="container my-10">
       <v-row justify="center" v-if="program && ting">
-        <v-col cols="6">
+        <v-col cols="8">
           <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
           <v-divider></v-divider>
           <div class="container">
@@ -50,8 +50,8 @@
                     </div>
                     <div class="my-10">
                       <v-row>
-                        <v-col cols="6">用时：{{ duration }}</v-col>
-                        <v-col cols="6">正确率：{{ (tingPractice.score * 100).toFixed(2) }}%</v-col>
+                        <v-col cols="8">用时：{{ duration }}</v-col>
+                        <v-col cols="8">正确率：{{ (tingPractice.score * 100).toFixed(2) }}%</v-col>
                       </v-row>
                     </div>
                     <div class="container text-center">

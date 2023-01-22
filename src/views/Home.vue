@@ -4,7 +4,7 @@
     <Navigation></Navigation>
     <div class="container my-10">
       <v-row justify="center">
-        <v-col cols="6">
+        <v-col cols="8">
           <v-chip
             v-for="language in languages"
             :key="language.value"
@@ -19,14 +19,14 @@
       <div v-if="loaded">
         <div v-if="programs.length === 0">
           <v-row justify="center">
-            <v-col cols="6">
+            <v-col cols="8">
               <p class="text-body-1 text-center">暂无节目</p>
             </v-col>
           </v-row>
         </div>
         <div v-else>
           <v-row v-for="program in programs" :key="program.id" justify="center">
-            <v-col cols="6">
+            <v-col cols="8">
               <p>
                 <router-link :to="`/programs/${program.id}`" class="text-h6">{{ program.title }}</router-link>
               </p>

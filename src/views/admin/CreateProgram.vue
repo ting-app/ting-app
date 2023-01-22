@@ -22,7 +22,7 @@
           <v-stepper-items>
             <v-stepper-content step="1">
               <v-row justify="center" class="program-container">
-                <v-col cols="6">
+                <v-col cols="8">
                   <v-form
                     ref="form"
                     v-model="valid"

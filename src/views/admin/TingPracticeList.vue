@@ -4,21 +4,21 @@
     <Navigation></Navigation>
     <div class="container my-10">
       <v-row justify="center">
-        <v-col cols="6">
+        <v-col cols="8">
           <v-breadcrumbs :items="breadcrumbs" large></v-breadcrumbs>
         </v-col>
       </v-row>
       <div v-if="loaded">
         <div v-if="tingPractices.length === 0">
           <v-row justify="center">
-            <v-col cols="6">
+            <v-col cols="8">
               <p class="text-body-1 text-center">暂无听写</p>
             </v-col>
           </v-row>
         </div>
         <div v-else>
           <v-row v-for="tingPractice in tingPractices" :key="tingPractice.id" justify="center">
-            <v-col cols="6">
+            <v-col cols="8">
               <p>
                 <router-link :to="`/tings/${tingPractice.tingId}`" class="text-h6">{{ tingPractice.tingTitle }}</router-link>
               </p>

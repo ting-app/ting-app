@@ -23,6 +23,16 @@
               </p>
               <p class="text-body-1">{{ ting.description }}</p>
               <p class="text-caption">创建时间：{{ formatDateTime(ting.createdAt) }}</p>
+              <p v-if="ting.tags">
+                <v-chip
+                  v-for="tag in ting.tags"
+                  :key="tag.id"
+                  color="primary"
+                  outlined
+                  small>
+                  {{ tag.name }}
+                </v-chip>
+              </p>
               <v-divider></v-divider>
             </v-col>
           </v-row>

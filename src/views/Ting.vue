@@ -123,7 +123,7 @@ export default {
         .format('HH:mm:ss')
     },
     diffs () {
-      return Diff.diffChars(this.ting.content, this.tingPractice.content)
+      return Diff.diffChars(this.tingPractice.content, this.ting.content)
     }
   },
   data () {
@@ -161,7 +161,7 @@ export default {
 
       clearInterval(this.ticker)
 
-      const diffs = Diff.diffChars(this.ting.content, this.tingPractice.content)
+      const diffs = this.diffs
       const diffCount = diffs.map(diff => {
         if (!diff.added && !diff.removed) {
           return 0

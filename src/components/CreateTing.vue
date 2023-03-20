@@ -27,7 +27,7 @@
               clear-icon="mdi-close-circle"
               label="描述*"
               v-model="description"
-              :counter="200"
+              :counter="250"
               :rules="descriptionRules"
             ></v-textarea>
             <v-textarea
@@ -35,7 +35,7 @@
               clear-icon="mdi-close-circle"
               label="原文*"
               v-model="content"
-              :counter="2000"
+              :counter="3000"
               :rules="contentRules"
             ></v-textarea>
             <v-file-input
@@ -93,12 +93,12 @@ export default {
       description: '',
       descriptionRules: [
         v => !!v || '描述不能为空',
-        v => (v && v.length <= 200) || '描述不能超过200个字符'
+        v => (v && v.length <= 250) || '描述不能超过250个字符'
       ],
       content: '',
       contentRules: [
         v => !!v || '原文不能为空',
-        v => (v && v.length <= 2000) || '原文不能超过2000个字符'
+        v => (v && v.length <= 3000) || '原文不能超过3000个字符'
       ],
       audioFile: null,
       audioFileRules: [

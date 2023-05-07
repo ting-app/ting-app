@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Register from '../views/Register.vue'
-import ConfirmRegistration from '../views/ConfirmRegistration.vue'
-import Login from '../views/Login.vue'
-import CreateProgram from '../views/admin/CreateProgram.vue'
-import Program from '../views/Program.vue'
-import Ting from '../views/Ting.vue'
-import ProgramList from '../views/admin/ProgramList.vue'
-import TingList from '../views/admin/TingList.vue'
-import Settings from '../views/admin/Settings.vue'
-import TingPracticeList from '../views/admin/TingPracticeList.vue'
+import HomeView from '../views/HomeView.vue'
+import RegisterView from '../views/RegisterView.vue'
+import ConfirmRegistrationView from '../views/ConfirmRegistrationView.vue'
+import LoginView from '../views/LoginView.vue'
+import CreateProgramView from '../views/admin/CreateProgramView.vue'
+import ProgramView from '../views/ProgramView.vue'
+import TingView from '../views/TingView.vue'
+import ProgramListView from '../views/admin/ProgramListView.vue'
+import TingListView from '../views/admin/TingListView.vue'
+import SettingsView from '../views/admin/SettingsView.vue'
+import TingPracticeListView from '../views/admin/TingPracticeListView.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -19,37 +19,37 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: HomeView
   },
   {
     path: '/register',
     name: 'Register',
-    component: Register
+    component: RegisterView
   },
   {
     path: '/confirmRegistration',
     name: 'ConfirmRegistration',
-    component: ConfirmRegistration
+    component: ConfirmRegistrationView
   },
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: LoginView
   },
   {
     path: '/programs/:id',
     name: 'Program',
-    component: Program
+    component: ProgramView
   },
   {
     path: '/tings/:id',
     name: 'Ting',
-    component: Ting
+    component: TingView
   },
   {
     path: '/admin/createProgram',
     name: 'CreateProgram',
-    component: CreateProgram,
+    component: CreateProgramView,
     meta: {
       loginRequired: true
     }
@@ -57,7 +57,7 @@ const routes = [
   {
     path: '/admin/programs',
     name: 'ProgramList',
-    component: ProgramList,
+    component: ProgramListView,
     meta: {
       loginRequired: true
     }
@@ -65,7 +65,7 @@ const routes = [
   {
     path: '/admin/programs/:programId/tings',
     name: 'TingList',
-    component: TingList,
+    component: TingListView,
     meta: {
       loginRequired: true
     }
@@ -73,7 +73,7 @@ const routes = [
   {
     path: '/admin/tingPractices',
     name: 'TingPracticeList',
-    component: TingPracticeList,
+    component: TingPracticeListView,
     meta: {
       loginRequired: true
     }
@@ -81,7 +81,7 @@ const routes = [
   {
     path: '/admin/settings',
     name: 'Settings',
-    component: Settings,
+    component: SettingsView,
     meta: {
       loginRequired: true
     }

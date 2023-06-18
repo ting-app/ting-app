@@ -10,6 +10,10 @@ axios.interceptors.response.use((response) => {
 
   return data
 }, (error) => {
+  if (!error.response) {
+    return Promise.reject(new Error(error.message))
+  }
+
   const response = error.response
   const data = response.data
   const message = (data && data.error && data.error.message) ? data.error.message : 'Internal server error'
